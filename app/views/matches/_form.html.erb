@@ -1,0 +1,63 @@
+<%= form_with(model: match) do |form| %>
+  <% if match.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(match.errors.count, "error") %> prohibited this match from being saved:</h2>
+
+      <ul>
+        <% match.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :date, style: "display: block" %>
+    <%= form.date_field :date %>
+  </div>
+
+  <div>
+    <%= form.label :league_id, style: "display: block" %>
+    <%#= form.text_field :league_id %>
+    <%= form.select :league_id, @leagues.map {|l| [l.full_name, l.id]} %>
+  </div>
+
+  <div>
+    <%= form.label :participant1, style: "display: block" %>
+    <%= select_tag 'match[participants][]',
+                   options_from_collection_for_select(@players, :id, :full_name),
+                   id: 'participant1' %>    
+  </div>
+
+  <div>
+    <%= form.label :score1, style: "display: block" %>
+    <%= text_field_tag 'match[scores][]', id: 'score1' %>
+  </div>
+  <div>
+    <%= form.label :participant2, style: "display: block" %>
+    <%= select_tag 'match[participants][]',
+                   options_from_collection_for_select(@players, :id, :full_name),
+                   id: 'participant2' %>   
+  </div>
+
+  <div>
+    <%= form.label :score2, style: "display: block" %>
+    <%= text_field_tag 'match[scores][]', id: 'score2' %>
+  </div>
+
+  <div>
+    <%= form.label :participant3, style: "display: block" %>
+    <%= select_tag 'match[participants][]',
+                   options_from_collection_for_select(@players, :id, :full_name),
+                   id: 'participant3' %>   
+  </div>
+
+  <div>
+    <%= form.label :score3, style: "display: block" %>
+    <%= text_field_tag 'match[scores][]', id: 'score3' %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

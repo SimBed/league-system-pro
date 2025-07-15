@@ -22,6 +22,16 @@
   </div>
 
   <div>
+    <%= form.label :match_participants, style: "display: block" %>
+    <%= form.number_field :match_participants %>
+  </div>
+
+  <div>
+    <%= form.label :participant_type, style: "display: block" %>
+    <%= form.text_field :participant_type %>
+  </div>
+
+  <div>
     <%= form.submit %>
   </div>
 <% end %>

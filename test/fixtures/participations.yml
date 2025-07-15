@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  score: 1
+  match: one
+  participatable: one
+  participatable_type: Participatable
+
+two:
+  score: 1
+  match: two
+  participatable: two
+  participatable_type: Participatable

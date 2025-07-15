@@ -1,8 +1,10 @@
 class CreateLeagues < ActiveRecord::Migration[8.0]
   def change
     create_table :leagues do |t|
-      t.string :name
-      t.string :season
+      t.string :name, null: false
+      t.string :season, null: false
+      t.integer :match_participants, null: false
+      t.string :participant_type, null: false
 
       t.timestamps
     end

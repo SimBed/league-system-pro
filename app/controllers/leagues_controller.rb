@@ -65,6 +65,6 @@ class LeaguesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def league_params
-      params.expect(league: [ :name, :season ])
+      params.expect(league: [ :name, :season, :match_participants, :participant_type ])
     end
 end
