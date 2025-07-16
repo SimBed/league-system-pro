@@ -1,11 +1,6 @@
 <% content_for :title, "New match" %>
-
-<h1>New match</h1>
-
-<%= render "form", match: @match %>
-
-<br>
-
-<div>
-  <%= link_to "Back to matches", matches_path %>
-</div>
+<%= turbo_frame_tag @match do %>
+  <div class="col-md-6 mb-4">
+    <%= render "form", match: @match %>
+  </div>
+<% end %>

@@ -1,10 +1,25 @@
-<p style="color: green"><%= notice %></p>
-
-<%= render @league %>
-
-<div>
-  <%= link_to "Edit this league", edit_league_path(@league) %> |
-  <%= link_to "Back to leagues", leagues_path %>
-
-  <%= button_to "Destroy this league", @league, method: :delete %>
-</div>
+<%= turbo_frame_tag @league do %>
+<div id="league-table" class="canvas gray100-canvas embossed my-2">
+  <div class="fst-italic ps-2"><%= "#{@league.full_name}" %></div>
+  <div class="admin-table mt-2 mb-4">
+      <div class="row">
+        <div class="column col-1x">Name</div>
+        <div class="column col-1x">Matches</div>
+        <div class="column col-1x">Score</div>
+        <div class="column col-1x">Average Score</div>
+        <div class="column col-1x">Position</div>
+      </div>
+    <% @participants.each_with_index do |participant, index| %>
+      <div class="row">
+        <div class="column col-1x"><%= link_to participant.full_name, participant, class: 'buttonlike', data: {turbo: false} %></div>
+        <div class="column col-1x"><%= participant.matches_played %></div>
+        <div class="column col-1x"><%= participant.total_score %></div>
+        <div class="column col-1x"><%= participant.average_score %></div>
+        <div class="column col-1x"><%= index + 1 %></div>
+      </div>
+    <% end %>
+    <div class="cancel">
+      <%= link_to image_tag('delete.png', class: "table_icon"), @form_cancel_link %>
+    </div>
+  </div>
+<% end %>

@@ -1,17 +1,10 @@
-<h1 class='text-primary'>Leagues</h1>
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Leagues" %>
-
-<h1>Leagues</h1>
-
-<div id="leagues">
-  <% @leagues.each do |league| %>
-    <%= render league %>
-    <p>
-      <%= link_to "Show this league", league %>
-    </p>
+<h5 class='mb-4'>Leagues 
+  <%= link_to new_league_path, data: { turbo_frame: dom_id(League.new)} do %>
+    <i class="bi bi-database-fill-add"></i>
   <% end %>
-</div>
-
-<%= link_to "New league", new_league_path %>
+</h5>
+<%= turbo_frame_tag League.new %>
+<%= turbo_frame_tag 'leagues' do %>
+  <%= render 'leagues_table' %>
+<% end %>

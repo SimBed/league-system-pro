@@ -1,10 +1,26 @@
-<p style="color: green"><%= notice %></p>
+<%= turbo_frame_tag @match do %>
+<div id="match-table" class="canvas gray100-canvas embossed my-2">
+  <div class="fst-italic ps-2"><%= "#{@match.league.full_name}, #{@match.date.strftime('%d %b %y')}" %></div>
+  <div class="admin-table mt-2 mb-4">
+      <div class="row">
+        <div class="column col-1x">Name</div>
+        <div class="column col-1x">Matches</div>
+        <div class="column col-1x">Score</div>
+        <div class="column col-1x">Average Score</div>
+        <div class="column col-1x">Position</div>
+      </div>
+    <% @participants.each_with_index do |participant, index| %>
+      <div class="row">
+        <div class="column col-1x"><%= link_to participant.full_name, participant, class: 'buttonlike', data: {turbo: false} %></div>
+        <div class="column col-1x"><%= participant.matches_played %></div>
+        <div class="column col-1x"><%= participant.total_score %></div>
+        <div class="column col-1x"><%= participant.average_score %></div>
+        <div class="column col-1x"><%= index + 1 %></div>
+      </div>
+    <% end %>
+    <div class="cancel">
+      <%= link_to image_tag('delete.png', class: "table_icon"), matches_path %>
+    </div>
+  </div>
+<% end %>
 
-<%= render @match %>
-
-<div>
-  <%= link_to "Edit this match", edit_match_path(@match) %> |
-  <%= link_to "Back to matches", matches_path %>
-
-  <%= button_to "Destroy this match", @match, method: :delete %>
-</div>

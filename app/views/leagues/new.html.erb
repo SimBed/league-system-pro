@@ -1,11 +1,6 @@
 <% content_for :title, "New league" %>
-
-<h1>New league</h1>
-
-<%= render "form", league: @league %>
-
-<br>
-
-<div>
-  <%= link_to "Back to leagues", leagues_path %>
-</div>
+<%= turbo_frame_tag @league do %>
+  <div class="col-md-6 mb-4">
+    <%= render "form", league: @league %>
+  </div>
+<% end %>

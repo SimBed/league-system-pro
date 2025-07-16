@@ -1,22 +1,16 @@
-<div id="<%= dom_id league %>">
-  <p>
-    <strong>Name:</strong>
-    <%= league.name %>
-  </p>
-
-  <p>
-    <strong>Season:</strong>
-    <%= league.season %>
-  </p>
-
-  <p>
-    <strong>Match Participants:</strong>
-    <%= league.match_participants %>
-  </p>
-
-  <p>
-    <strong>Participants Type:</strong>
-    <%= league.participant_type %>
-  </p>
-
-</div>
+<%= turbo_frame_tag league do %>
+  <div class="row">
+    <div class="column col-2x"><%= link_to league.name, league_path(league), class: 'buttonlike' %></div>
+    <div class="column col-2x"><%= league.season%></div>
+    <div class="column col-2x"><%= league.match_participants %></div>
+    <div class="column col-2x"><%= league.participant_type %></div>
+    <div class="column col-2x"><%= league.matches.size || 0 %></div>
+    <div class="column col-2x"><%= @league_leaders[league.id]&.full_name %></div>
+    <div class="column col-2x"><%= @league_leaders[league.id]&.total_score %></div>
+    <div class="column nomobile"><%= link_to edit_league_path(league),
+                                             data: {turbo_frame: dom_id(league)} do %>
+                                               <i class="bi bi-pencil-fill"></i>
+                                             <% end %>
+    </div>
+  </div>
+<% end %>

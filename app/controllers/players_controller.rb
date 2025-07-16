@@ -8,6 +8,9 @@ class PlayersController < ApplicationController
 
   # GET /players/1 or /players/1.json
   def show
+    @leagues = [ [ "All", nil, { "data-showurl" => player_path(@player) } ] ] +
+                @player.leagues.map { |l| [ l.full_name, l.id, { "data-showurl" => player_url(@player.id, { league_id: l.id }) } ] }
+    @participations = @player.participations.includes(match: [ :league ])
   end
 
   # GET /players/new

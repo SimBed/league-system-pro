@@ -1,17 +1,10 @@
-<div id="<%= dom_id player %>">
-  <p>
-    <strong>First name:</strong>
-    <%= player.first_name %>
-  </p>
-
-  <p>
-    <strong>Last name:</strong>
-    <%= player.last_name %>
-  </p>
-
-  <p>
-    <strong>Team:</strong>
-    <%= player.team_id %>
-  </p>
-
-</div>
+<%= turbo_frame_tag player do %>
+  <div class="row">
+    <div class="column col-2x"><%= link_to player.full_name, player_path(player), class: 'buttonlike', data: {turbo: false} %></div>                                        
+    <div class="column nomobile"><%= link_to edit_player_path(player),
+                                             data: {turbo_frame: dom_id(player)} do %>
+                                               <i class="bi bi-pencil-fill"></i>
+                                             <% end %>
+    </div>
+  </div>
+<% end %>
