@@ -1,4 +1,4 @@
-<%= form_with(model: match) do |form| %>
+<%= form_with(model: match, class: 'admin_form pt-4 my-2') do |form| %>
   <% if match.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(match.errors.count, "error") %> prohibited this match from being saved:</h2>
@@ -11,53 +11,60 @@
     </div>
   <% end %>
 
-  <div>
+  <div class="field">
     <%= form.label :date, style: "display: block" %>
     <%= form.date_field :date %>
   </div>
 
-  <div>
+  <div class="field">
     <%= form.label :league_id, style: "display: block" %>
     <%#= form.text_field :league_id %>
-    <%= form.select :league_id, @leagues.map {|l| [l.full_name, l.id]} %>
+    <%= form.select :league_id, @league_options %>
   </div>
 
-  <div>
+  <div class="field">
     <%= form.label :participant1, style: "display: block" %>
     <%= select_tag 'match[participants][]',
                    options_from_collection_for_select(@players, :id, :full_name),
                    id: 'participant1' %>    
   </div>
 
-  <div>
+  <div class="field">
     <%= form.label :score1, style: "display: block" %>
     <%= text_field_tag 'match[scores][]', id: 'score1' %>
   </div>
-  <div>
+
+  <div class="field">
     <%= form.label :participant2, style: "display: block" %>
     <%= select_tag 'match[participants][]',
                    options_from_collection_for_select(@players, :id, :full_name),
                    id: 'participant2' %>   
   </div>
 
-  <div>
+  <div class="field">
     <%= form.label :score2, style: "display: block" %>
     <%= text_field_tag 'match[scores][]', id: 'score2' %>
   </div>
 
-  <div>
+  <div class="field">
     <%= form.label :participant3, style: "display: block" %>
     <%= select_tag 'match[participants][]',
                    options_from_collection_for_select(@players, :id, :full_name),
                    id: 'participant3' %>   
   </div>
 
-  <div>
+  <div class="field">
     <%= form.label :score3, style: "display: block" %>
     <%= text_field_tag 'match[scores][]', id: 'score3' %>
   </div>
 
-  <div>
+  <div class="actions mt-3">
     <%= form.submit %>
   </div>
+
+  <% if match.new_record? %>
+    <div class='cancel' data-controller="form-cancel"><%= link_to 'X', '#', data: { action: 'form-cancel#cancel' } %> </div>  
+  <% else %>
+    <div class='cancel'><%= link_to 'X', matches_path %> </div>  
+  <% end %>  
 <% end %>

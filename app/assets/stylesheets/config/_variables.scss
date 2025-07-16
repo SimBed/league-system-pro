@@ -1,0 +1,79 @@
+// Variables should follow the `$component-state-property-size` formula for
+// consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+
+$white: #ffffff;
+$gray-50: #f8f9fa;
+$gray-100: #eeeeee;
+$gray-200: #dddddd;
+$gray-300: #bbbbbb;
+$gray-400: #ced4da;
+$gray-500: #adb5bd;
+$gray-600: #999999;
+$gray-700: #777777;
+$gray-800: #555555;
+$gray-900: #222222;
+$black: #000000;
+
+$grays: (
+  "100": $gray-100,
+  "200": $gray-200,
+  "300": $gray-300,
+  "400": $gray-400,
+  "500": $gray-500,
+  "600": $gray-600,
+  "700": $gray-700,
+  "800": $gray-800,
+  "900": $gray-900,
+) !default;
+
+$blue: #4726e1;
+$indigo: #6610f2 !default;
+$purple: #300d81;
+$pink: #d63384 !default;
+$red: #d34f2d;
+$orange: #f08d34;
+$yellow: #f7cc76;
+$green: #1d4b40;
+$teal: #20c997 !default;
+$cyan: #0dcaf0 !default;
+
+$colors: (
+  "blue": $blue,
+  "indigo": $indigo,
+  "purple": $purple,
+  "pink": $pink,
+  "red": $red,
+  "orange": $orange,
+  "yellow": $yellow,
+  "green": $green,
+  "teal": $teal,
+  "cyan": $cyan,
+  "white": $white,
+  "gray": $gray-600,
+  "gray-dark": $gray-800,
+  "black": $black,
+  "border-color": $gray-200,
+) !default;
+
+$primary: $blue;
+$secondary: $gray-800;
+$success: $green !default;
+$info: $cyan !default;
+$warning: $yellow !default;
+$danger: $red !default;
+$light: $gray-100 !default;
+$dark: $gray-900 !default;
+
+$theme-colors: (
+  "primary": $primary,
+  "secondary": $secondary,
+  "success": $success,
+  "info": $info,
+  "warning": $warning,
+  "danger": $danger,
+  "light": $light,
+  "dark": $dark,
+) !default;
+
+$font-stack: "Quicksand", "Arial";
+$font-size-base: 1rem !default;

@@ -1,0 +1,23 @@
+<div id="matches_table" class="match-player-data container px-0 mb-5">
+  <div class="container px-0 mb-5">
+    <div class="admin-table mt-2">
+      <div class="row fw-bolder">
+        <div class="column col-2x">Date</div>
+        <div class="column col-2x">Score</div>
+        <div class="column col-2x">League</div>
+      </div>
+    </div>
+    <div class="admin-table">
+      <% @participations.each do |participation| %>
+        <div class="row">
+          <div class="column col-2x">
+            <%= participation.match.date.strftime('%d/%m/%y') %>
+          </div>
+          <div class="column col-2x"><%= participation.score %></div>
+          <div class="column col-2x"><%= link_to participation.match.league.name,
+                                                league_path(participation.match.league, link_from: 'player_show'), class: 'buttonlike' %></div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

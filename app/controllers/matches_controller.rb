@@ -3,18 +3,20 @@ class MatchesController < ApplicationController
 
   def index
     @matches = Match.all
+    set_options
   end
 
   def show
+    @participants = Player.with_scores_for(@match.league).order("total_score DESC, first_name ASC")
   end
 
   def new
     @match = Match.new
-    @leagues = League.all
-    @players = Player.all
+    set_options
   end
 
   def edit
+    set_options
   end
 
   def create
@@ -64,6 +66,11 @@ class MatchesController < ApplicationController
     def set_match
       @match = Match.find(params.expect(:id))
     end
+
+  def set_options
+    @league_options = League.order_by_created_at.map { |league| [ league.full_name, league.id ] }
+    @players = Player.all
+  end
 
     def match_params
       params.expect(match: [ :date, :league_id, participants: [], scores: [] ])

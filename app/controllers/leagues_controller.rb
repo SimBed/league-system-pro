@@ -1,25 +1,26 @@
 class LeaguesController < ApplicationController
   before_action :set_league, only: %i[ show edit update destroy ]
 
-  # GET /leagues or /leagues.json
   def index
-    @leagues = League.all
+    @leagues = League.includes(:matches)
+    @league_leaders = Player.with_league_stats.group_by(&:league_id).transform_values do |players|
+      players.max_by(&:total_score)
+    end
   end
 
-  # GET /leagues/1 or /leagues/1.json
   def show
+    @participants = Player.with_scores_for(@league).order("total_score DESC, first_name ASC")
+    @match_id = params[:match_id]
+    get_form_cancel_link
   end
 
-  # GET /leagues/new
   def new
     @league = League.new
   end
 
-  # GET /leagues/1/edit
   def edit
   end
 
-  # POST /leagues or /leagues.json
   def create
     @league = League.new(league_params)
 
@@ -34,7 +35,6 @@ class LeaguesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /leagues/1 or /leagues/1.json
   def update
     respond_to do |format|
       if @league.update(league_params)
@@ -47,7 +47,6 @@ class LeaguesController < ApplicationController
     end
   end
 
-  # DELETE /leagues/1 or /leagues/1.json
   def destroy
     @league.destroy!
 
@@ -58,13 +57,17 @@ class LeaguesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
     def set_league
       @league = League.find(params.expect(:id))
     end
 
-    # Only allow a list of trusted parameters through.
     def league_params
       params.expect(league: [ :name, :season, :match_participants, :participant_type ])
+    end
+
+    def get_form_cancel_link
+      @show_cancel = params[:link_from] == "player_show" ? false : true
+
+      @form_cancel_link = @match_id ? matches_path : leagues_path
     end
 end
