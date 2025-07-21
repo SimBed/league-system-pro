@@ -1,0 +1,7 @@
+<%= turbo_stream.update "leagues" do %>
+  <%= render partial: "leagues_table" %>
+<% end %>
+<%= turbo_stream.update "new_league" do %>
+  <%= render inline:'' %>
+<% end %>
+<%= turbo_stream.prepend("flash", partial: "layouts/flash") %>

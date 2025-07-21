@@ -1,6 +1,6 @@
 <% content_for :title, "Leagues" %>
 <h5 class='mb-4'>Leagues 
-  <%= link_to new_league_path, data: { turbo_frame: dom_id(League.new)} do %>
+  <%= link_to new_league_path, data: { turbo_frame: dom_id(League.new)}, alt: 'New League' do %>
     <i class="bi bi-database-fill-add"></i>
   <% end %>
 </h5>

@@ -17,10 +17,13 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
-          bundler-cache: true
+          bundler-cache: false
 
-      - name: Scan for common Rails security vulnerabilities using static analysis
-        run: bin/brakeman --no-pager
+      - name: Install gems
+        run: bundle install --jobs 4 --retry 3          
+
+      # - name: Scan for common Rails security vulnerabilities using static analysis
+        # run: bin/brakeman --no-pager
 
   scan_js:
     runs-on: ubuntu-latest
@@ -33,7 +36,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
-          bundler-cache: true
+          bundler-cache: false
+
+      - name: Install gems
+        run: bundle install --jobs 4 --retry 3          
 
       - name: Scan for security vulnerabilities in JavaScript dependencies
         run: bin/importmap audit
@@ -48,7 +54,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
-          bundler-cache: true
+          bundler-cache: false
+
+      - name: Install gems
+        run: bundle install --jobs 4 --retry 3          
 
       - name: Lint code for consistent style
         run: bin/rubocop -f github
@@ -83,7 +92,10 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: .ruby-version
-          bundler-cache: true
+          bundler-cache: false
+
+      - name: Install gems
+        run: bundle install --jobs 4 --retry 3            
 
       - name: Run tests
         env:

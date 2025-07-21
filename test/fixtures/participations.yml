@@ -1,13 +1,31 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+participation1:
+  score: 10
+  match: match1
+  participatable_type: Player
+  participatable: dan
+participation2:
+  score: 5
+  match: match1
+  participatable_type: Player
+  participatable: kev
+participation3:
+  score: 0
+  match: match1
+  participatable_type: Player
+  participatable: andy
+participation4:
+  score: -3
+  match: match2
+  participatable_type: Player
+  participatable: dan
+participation5:
+  score: 7
+  match: match2
+  participatable_type: Player
+  participatable: kev
+participation6:
+  score: 3
+  match: match2
+  participatable_type: Player
+  participatable: andy
 
-one:
-  score: 1
-  match: one
-  participatable: one
-  participatable_type: Participatable
-
-two:
-  score: 1
-  match: two
-  participatable: two
-  participatable_type: Participatable

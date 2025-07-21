@@ -2,7 +2,7 @@
   <div class="row">
     <div class="column col-2x"><%= link_to league.name, league_path(league), class: 'buttonlike' %></div>
     <div class="column col-2x"><%= league.season%></div>
-    <div class="column col-2x"><%= league.match_participants %></div>
+    <div class="column col-2x"><%= league.participants_per_match %></div>
     <div class="column col-2x"><%= league.participant_type %></div>
     <div class="column col-2x"><%= league.matches.size || 0 %></div>
     <div class="column col-2x"><%= @league_leaders[league.id]&.full_name %></div>

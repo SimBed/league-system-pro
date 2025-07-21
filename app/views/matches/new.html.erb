@@ -1,6 +1,7 @@
 <% content_for :title, "New match" %>
 <%= turbo_frame_tag @match do %>
   <div class="col-md-6 mb-4">
-    <%= render "form", match: @match %>
+    <%#= render "form", match: @match %>
+    <%= render "dynamic_form", match: @match %>
   </div>
 <% end %>

@@ -1,7 +1,11 @@
 require "test_helper"
 
 class TeamTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  def setup
+    @team = teams(:team1)
+  end
+
+  test "should be valid" do
+    assert @team.valid?
+  end
 end

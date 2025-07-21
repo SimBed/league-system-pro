@@ -1,11 +1,9 @@
-# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
-
-one:
-  first_name: MyString
-  last_name: MyString
-  team: one
-
-two:
-  first_name: MyString
-  last_name: MyString
-  team: two
+dan:
+  first_name: Dan
+  last_name: Simmo
+kev:
+  first_name: Kev
+  last_name: Simmo
+andy:
+  first_name: Andy
+  last_name: Kannot

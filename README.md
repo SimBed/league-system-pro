@@ -38,4 +38,10 @@ $ rails g model participation score:integer match:references participatable:refe
 the {polymorphic} syntax here doesn't seem to be officially documented, but does work
 ```
 
-$ rails db:migrate  
+$ rails db:migrate
+
+```
+to run system tests ensure chromium-browser installed:
+$ chromium-browser --version
+$ sudo apt install chromium-chromedriver
+```

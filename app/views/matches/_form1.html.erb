@@ -1,0 +1,52 @@
+<%= form_with(model: match, class: 'admin_form pt-4 my-2') do |form| %>
+  <% if match.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(match.errors.count, "error") %> prohibited this match from being saved:</h2>
+      <ul>
+        <% match.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= @match.league.full_name %>
+  </div>
+
+  <div class="field">
+    <%= form.date_field :date, value: @date %>
+  </div>
+
+
+    <div class="d-flex flex-row mb-1">
+      <%= select_tag 'match[participants][]',
+                    options_from_collection_for_select(@players, :id, :full_name, @match.new_record? ? nil: @match_players[0].id),
+                    id: 'participant1' %>    
+      <%= number_field_tag 'match[scores][]', @score_hash ? @score_hash[@match_players[0].id] : 0, min: -10000, max: 10000, step: 0.1, class: 'ms-2' %>
+    </div>
+
+    <div class="d-flex flex-row mb-1">
+      <%= select_tag 'match[participants][]',
+                    options_from_collection_for_select(@players, :id, :full_name, @match.new_record? ? nil: @match_players[1].id),
+                    id: 'participant2' %>   
+      <%= number_field_tag 'match[scores][]', @score_hash ? @score_hash[@match_players[1].id] : 0, min: -10000, max: 10000, step: 0.1, class: 'ms-2' %>
+    </div>
+
+    <div class="d-flex flex-row">
+      <%= select_tag 'match[participants][]',
+                    options_from_collection_for_select(@players, :id, :full_name, @match.new_record? ? nil: @match_players[2].id),
+                    id: 'participant3' %>   
+      <%= number_field_tag 'match[scores][]', @score_hash ? @score_hash[@match_players[2].id] : 0, min: -10000, max: 10000, step: 0.1, class: 'ms-2' %>
+    </div>
+
+  <div class="actions mt-3">
+    <%= form.submit %>
+  </div>
+
+  <% if match.new_record? %>
+    <div class='cancel' data-controller="form-cancel"><%= link_to 'X', '#', data: { action: 'form-cancel#cancel' } %> </div>  
+  <% else %>
+    <div class='cancel'><%= link_to 'X', matches_path %> </div>  
+  <% end %>  
+<% end %>

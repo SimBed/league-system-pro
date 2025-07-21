@@ -1,7 +1,11 @@
-<%= form_with(model: match, class: 'admin_form pt-4 my-2') do |form| %>
+<%= form_with(model: match, class: 'admin_form pt-4 my-2',
+              data: { controller: "match-form",
+                      match_form_players_value: @players.map { |p| { id: p.id, name: p.full_name } }.to_json
+                    }) do |form| %>
   <% if match.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(match.errors.count, "error") %> prohibited this match from being saved:</h2>
+
       <ul>
         <% match.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -11,21 +15,19 @@
   <% end %>
 
   <div class="field">
-    <%= "Match #{match.id} of#{@match.league.full_name}" %>
-  </div>
-
-  <div class="field">
     <%= form.date_field :date, value: @date %>
   </div>
 
-  <%= form.fields_for :participations do |p_fields| %>
-    <div class="d-flex flex-row mb-1">
-      <%= p_fields.select :participatable_id,
-            options_from_collection_for_select(@players, :id, :full_name, p_fields.object.participatable_id) %>
-      <%= p_fields.number_field :score, min: -10000, max: 10000, step: 0.1, class: 'ms-2' %>
-    </div>
-  <% end %>
+  <div class="field">
+    <select name="match[league_id]" id="match_league_id" data-action="change->match-form#updateFields">
+      <option value="">Select a League</option>
+      <% @leagues.each do |league| %>
+        <%= tag.option league.name, value: league.id, data: { participants_per_match: league.participants_per_match } %>
+      <% end %>
+    </select>
+  </div>
 
+  <div data-match-form-target="participants"></div>
 
   <div class="actions mt-3">
     <%= form.submit %>

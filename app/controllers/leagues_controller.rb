@@ -6,10 +6,11 @@ class LeaguesController < ApplicationController
     @league_leaders = Player.with_league_stats.group_by(&:league_id).transform_values do |players|
       players.max_by(&:total_score)
     end
+    handle_index_response
   end
 
   def show
-    @participants = Player.with_scores_for(@league).order("total_score DESC, first_name ASC")
+    @participants = Player.with_league_stats(league_id: @league.id).order("total_score DESC, first_name ASC")
     @match_id = params[:match_id]
     get_form_cancel_link
   end
@@ -23,37 +24,27 @@ class LeaguesController < ApplicationController
 
   def create
     @league = League.new(league_params)
-
-    respond_to do |format|
-      if @league.save
-        format.html { redirect_to @league, notice: "League was successfully created." }
-        format.json { render :show, status: :created, location: @league }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @league.errors, status: :unprocessable_entity }
-      end
+    if @league.save
+      flash[:success] = "League was successfully created."
+      redirect_to leagues_path
+    else
+      render :new, status: :unprocessable_entity
     end
   end
 
   def update
-    respond_to do |format|
-      if @league.update(league_params)
-        format.html { redirect_to @league, notice: "League was successfully updated." }
-        format.json { render :show, status: :ok, location: @league }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @league.errors, status: :unprocessable_entity }
-      end
+    if @league.update(league_params)
+      flash[:success] = "League was successfully updated."
+      redirect_to leagues_path
+    else
+      render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
     @league.destroy!
-
-    respond_to do |format|
-      format.html { redirect_to leagues_path, status: :see_other, notice: "League was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    flash[:success] = "League was successfully destroyed."
+    redirect_to leagues_path
   end
 
   private
@@ -61,8 +52,15 @@ class LeaguesController < ApplicationController
       @league = League.find(params.expect(:id))
     end
 
+    def handle_index_response
+      respond_to do |format|
+        format.html
+        format.turbo_stream
+      end
+    end
+
     def league_params
-      params.expect(league: [ :name, :season, :match_participants, :participant_type ])
+      params.expect(league: [ :name, :season, :participants_per_match, :participant_type ])
     end
 
     def get_form_cancel_link

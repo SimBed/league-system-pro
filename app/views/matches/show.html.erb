@@ -4,17 +4,13 @@
   <div class="admin-table mt-2 mb-4">
       <div class="row">
         <div class="column col-1x">Name</div>
-        <div class="column col-1x">Matches</div>
         <div class="column col-1x">Score</div>
-        <div class="column col-1x">Average Score</div>
         <div class="column col-1x">Position</div>
       </div>
-    <% @participants.each_with_index do |participant, index| %>
+    <% @participations.each_with_index do |participation, index| %>
       <div class="row">
-        <div class="column col-1x"><%= link_to participant.full_name, participant, class: 'buttonlike', data: {turbo: false} %></div>
-        <div class="column col-1x"><%= participant.matches_played %></div>
-        <div class="column col-1x"><%= participant.total_score %></div>
-        <div class="column col-1x"><%= participant.average_score %></div>
+        <div class="column col-1x"><%= link_to participation.participatable.full_name, participation.participatable, class: 'buttonlike', data: {turbo: false} %></div>
+        <div class="column col-1x"><%= participation.score %></div>
         <div class="column col-1x"><%= index + 1 %></div>
       </div>
     <% end %>
