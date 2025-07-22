@@ -12,6 +12,12 @@ Rails.application.configure do
 
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # DPS
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :test
+
+  config.action_mailer.default_url_options = { host: "localhost", port: 3000, protocol: "http" }
+
   # Make code changes take effect immediately without server restart.
   config.enable_reloading = true
 

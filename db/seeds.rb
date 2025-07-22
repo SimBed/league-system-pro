@@ -1,9 +1,10 @@
-league1 = League.create!(name: 'League1',
-               season: 'Season1',
+User.create!(email: 'dan@gmail.com', password: 'password', password_confirmation: 'password')
+league1 = League.create!(name: 'BestHand',
+               season: 'Summer',
                participants_per_match: 3,
                participant_type: 'player')
-league2 = League.create!(name: 'League2',
-               season: 'Season2',
+league2 = League.create!(name: 'BestHand',
+               season: 'Winter',
                participants_per_match: 3,
                participant_type: 'player')
 

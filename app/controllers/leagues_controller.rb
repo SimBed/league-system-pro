@@ -13,6 +13,7 @@ class LeaguesController < ApplicationController
     @participants = Player.with_league_stats(league_id: @league.id).order("total_score DESC, first_name ASC")
     @match_id = params[:match_id]
     get_form_cancel_link
+    @frame_id = @match_id ? "show_league_for_match_#{@match_id}" : "league_#{@league.id}"
   end
 
   def new

@@ -70,3 +70,5 @@ end
 gem "rack-mini-profiler", "~> 4.0"
 
 gem "bullet", "~> 8.0"
+
+gem "devise", "~> 4.9"

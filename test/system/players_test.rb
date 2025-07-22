@@ -1,16 +1,21 @@
 require "application_system_test_case"
 
 class PlayersTest < ApplicationSystemTestCase
+  include Devise::Test::IntegrationHelpers
+
   setup do
+    @user = users(:one)
     @player = players(:dan)
   end
 
   test "visiting the index" do
+    sign_in @user    
     visit players_path
     assert_selector "h5", text: "Players"
   end
 
   test "should create player" do
+    sign_in @user
     visit players_path
     click_link nil, href: new_player_path
 
@@ -23,6 +28,7 @@ class PlayersTest < ApplicationSystemTestCase
   end
 
   test "should update Player" do
+    sign_in @user
     visit players_path
     click_link nil, href: edit_player_path(@player)
 

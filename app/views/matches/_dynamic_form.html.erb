@@ -22,7 +22,7 @@
     <select name="match[league_id]" id="match_league_id" data-action="change->match-form#updateFields">
       <option value="">Select a League</option>
       <% @leagues.each do |league| %>
-        <%= tag.option league.name, value: league.id, data: { participants_per_match: league.participants_per_match } %>
+        <%= tag.option league.full_name, value: league.id, data: { participants_per_match: league.participants_per_match } %>
       <% end %>
     </select>
   </div>
