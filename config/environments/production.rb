@@ -3,6 +3,21 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
+  # DPS
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.delivery_method = :smtp
+  host = "league-system-pro.simbed.duckdns.org"
+  config.action_mailer.default_url_options = { host: host, protocol: "https" }
+  ActionMailer::Base.smtp_settings = {
+    address:        "smtp.sendgrid.net",
+    port:           "587",
+    authentication: :plain,
+    user_name:      Rails.application.credentials.dig(:sendgrid, :user_name),
+    password:        Rails.application.credentials.dig(:sendgrid, :api_key),
+    domain:         "simbed.duckdns.org",
+    enable_starttls_auto: true
+  }
+
   # Code is not reloaded between requests.
   config.enable_reloading = false
 

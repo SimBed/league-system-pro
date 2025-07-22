@@ -9,7 +9,7 @@ class PlayersTest < ApplicationSystemTestCase
   end
 
   test "visiting the index" do
-    sign_in @user    
+    sign_in @user
     visit players_path
     assert_selector "h5", text: "Players"
   end
