@@ -4,7 +4,8 @@
 // @import "bootstrap/scss/maps";
 // @import "bootstrap/scss/mixins";
 // @import "bootstrap/scss/utilities";
-// @import 'config/_variables';
+@import 'config/_variables';
 @import 'bootstrap/scss/bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons';
+@import 'config/_reboot';
 @import 'components/_index';

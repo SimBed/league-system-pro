@@ -1,1 +1,4 @@
 en:
+  devise:
+    failure:
+      unauthenticated: "Forbidden"

@@ -1,32 +1,49 @@
-a.buttonlike {
-  border-radius: 0.5rem;
-  padding: 0.1rem 0.5rem;
-  box-shadow: 0.1rem 0.1rem 0.3rem $gray-300;
+a {
+  color: black;
   text-decoration: none;
-  color: $black;
-  background-color: $gray-400;
-  &.text-priority {
-    color: $gray-800;
-    font-weight: 700;
+ }
+
+a:hover {
+color: black;
+opacity: 0.7; }
+
+a {
+  &.forgot-password {
+    color: $gray-900;
+    &:hover {
+      opacity: 0.5;
+    }
   }
-  // &::after {
-  //   content: '';
-  //   position: absolute;
-  //   left: 0;
-  //   bottom: 0;
-  //   width: 100%;
-  //   height: 1px;
-  //   background-color: black;
-  //   transform: scaleX(0);
-  //   transform-origin: bottom left;
-  //   transition: transform 0.2s ease-in-out;
-  // }
-  // &:hover::after,
-  // &:focus::after,
-  // &:active::after {
-  //   transform: scaleX(1);
-  // }  
+}
+
+a.like_button {
+  border-radius: 1rem;
+  line-height: 1.25;
+  padding: 0 0.2rem;
+  box-shadow: 0 1px $gray-700;
+  text-decoration: none;
+  color: black;
   &:hover {
+    color: $gray-700;
+  }
+  @include media-breakpoint-up(md) {
+     padding: 0rem 0.5rem;
+    }
+}
+
+a.like_button_alt {
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.5rem;
+  box-shadow: 0.1rem 0.1rem 0.3rem $gray-700;
+  text-decoration: none;
+  color: $white;
+  background-color: $black;
+  border-color: $black;  
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;   
+  &:hover {
+    opacity: 0.8;
     box-shadow: none;
   }
   @include media-breakpoint-up(md) {
@@ -55,4 +72,22 @@ a.option_choice {
       box-shadow: none;
       pointer-events: none;
     }  
+}
+
+a.buttonlike {
+  border-radius: 0.5rem;
+  padding: 0.1rem 0.5rem;
+  box-shadow: 0.1rem 0.1rem 0.3rem $gray-300;
+  text-decoration: none;
+  color: $black;
+  background-color: $gray-400;
+  &.text-priority {
+    color: $gray-800;
+    font-weight: 700;
+  }
+  &:hover {
+    box-shadow: none;
+  }
+  @include media-breakpoint-up(md) {
+  }
 }

@@ -1,3 +1,18 @@
+div.search {
+	position:relative;
+  padding-right: 15px;
+  padding-left: 15px;
+  margin:0;
+}
+
+// div i.fa, i.fas {
+//   font-size: 1.1rem;
+// }
+
+// div i.fa-sort-alpha-down{
+//   color: $gray-700;
+// }
+
 %select {
   color: $gray-700;
   border: solid;
@@ -79,13 +94,14 @@ input.disabled {
 }
 
 div.actions input {
-  background-color: $black;
-  border-color: $black;
+  background-color: $gray-800;
+  // border-color: $black;
   color: $white;
   border-radius: 0.5rem;
   padding: 0.5rem;
-  box-shadow: 0.3rem 0.3rem 0.6rem $gray-800;
-  text-transform: uppercase;
+  box-shadow: 0.1rem 0.1rem 0.3rem $gray-800;
+  text-transform: capitalize;
+  font-size: 0.8em;  
   &:hover {
     opacity: 0.8;
     box-shadow: none;    

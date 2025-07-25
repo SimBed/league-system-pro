@@ -1,12 +1,14 @@
-<h5 class='mb-4'>Matches 
-  <%= link_to new_match_path, data: { turbo_frame: dom_id(Match.new)} do %>
-    <i class="bi bi-database-fill-add"></i>
+<div class="container px-1">
+  <h5 class='mb-4'>Matches 
+    <%= link_to new_match_path, data: { turbo_frame: dom_id(Match.new)} do %>
+      <i class="bi bi-database-fill-add"></i>
+    <% end %>
+  </h5>
+  <%= turbo_frame_tag Match.new %>
+  <%= turbo_frame_tag 'matches-and-filter' do %>
+    <%= render 'filter_form' %>
+    <%= turbo_frame_tag 'matches' do %>
+      <%= render 'matches_table' %> 
+    <% end %>
   <% end %>
-</h5>
-<%= turbo_frame_tag Match.new %>
-<%= turbo_frame_tag 'matches-and-filter' do %>
-  <%= render 'filter_form' %>
-  <%= turbo_frame_tag 'matches' do %>
-    <%= render 'matches_table' %> 
-  <% end %>
-<% end %>
+</div>
