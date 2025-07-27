@@ -2,7 +2,7 @@ class MatchesController < ApplicationController
   before_action :set_match, only: %i[ show edit update destroy ]
 
   def index
-    @matches = Match.all
+    handle_selection
     # __method__ returns the current method being called https://apidock.com/ruby/Kernel/__method__
     set_options(__method__)
     handle_index_response
@@ -69,6 +69,12 @@ class MatchesController < ApplicationController
     redirect_to matches_path
   end
 
+  def filter
+    clear_session(:league)
+    session[:league] = params[:league] || session[:league]
+    redirect_to matches_path
+  end
+
   private
     def set_match
       # @match = Match.find(params.expect(:id))
@@ -89,6 +95,11 @@ class MatchesController < ApplicationController
         # {23=>10, 24=>5, 25=>0} key is participatable id, value is score
         @match_players = @match.players
       end
+    end
+
+    def handle_selection
+      session[:league] = session[:league] || League.minimum(:id)
+      @matches = Match.where(league_id: session[:league].to_i).order_by_date.includes(:league)
     end
 
     def handle_index_response

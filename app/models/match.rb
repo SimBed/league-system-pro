@@ -4,4 +4,5 @@ class Match < ApplicationRecord
   has_many :players, through: :participations, source: :participatable, source_type: "Player"
   accepts_nested_attributes_for :participations
   validates :date, presence: true
+  scope :order_by_date, -> { order(date: :desc) }
 end
