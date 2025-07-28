@@ -1,12 +1,6 @@
-<select id="league_dropdown">
-  <%= options_for_select(@leagues, params[:league_id]) %>
-</select>
-
-<script>
-	var userSelection = document.getElementById("league_dropdown");
-  userSelection.onchange = function(event){
-    var show_url = event.target.options[event.target.selectedIndex].dataset.showurl;
-    window.location.replace(show_url);
-  };
-
-</script>
+<%= form_with(url: league_filter_player_path(@player), method: "get", class: "form-class", data: {turbo_frame: "matches_table"}) do |form| %>  
+   <%= form.select :player_league_id,
+                   options_for_select(@league_options, session.dig(:player_league_ids, @player.id.to_s)),
+                   {},
+                   { class: 'sort', onchange: 'this.form.requestSubmit()' } %> 
+<% end %>

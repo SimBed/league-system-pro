@@ -23,12 +23,7 @@ div.search {
 
 select.sort {
   @extend %select;
-  padding: 0.1rem 0.5rem;  
-  // min-height: calc(1.5em + 0.5rem + 2px);    
-}
-
-select.booking {
-  @extend %select;
+  padding: 0.1rem 0.5rem; 
 }
 
 .form-control-sm {
@@ -149,7 +144,11 @@ form {
 
   &.entries select {
     max-width: 95%;
-  } 
+  }
+
+  &.hidden {
+    display: none;
+  }
 }
 
 h2 form {

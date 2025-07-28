@@ -1,6 +1,6 @@
 <div class="container px-1">
   <% content_for :title, "Players" %>
-  <h5 class='mb-4'>Players 
+  <h5 class='mb-2'>Players 
     <%= link_to new_player_path, data: { turbo_frame: dom_id(Player.new)} do %>
       <i class="bi bi-database-fill-add"></i>
     <% end %>

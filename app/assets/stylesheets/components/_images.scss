@@ -144,20 +144,6 @@ img.more_icon {
   margin-left: 0.5rem;
 }
   
-.row div.column.student {
-  &::after {
-    background-image: url('student.png');
-    @include image-after-content;
-  }
-}
-  
-.row div.column.warning {
-  &::after {
-    background-image: url('warning.png');
-    @include image-after-content;
-  }
-}
-
 img.instructor_status_icon {
   width: 1.0rem;
   height: 1.0rem;

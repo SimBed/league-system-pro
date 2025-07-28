@@ -1,4 +1,5 @@
 class MatchesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_match, only: %i[ show edit update destroy ]
 
   def index
@@ -10,7 +11,7 @@ class MatchesController < ApplicationController
 
   def show
     # @participants = Player.with_league_stats(league_id: @match.league.id).includes(:participations).order("total_score DESC, first_name ASC")
-    @participations = @match.participations.includes(:participatable).order(:score)
+    @participations = @match.participations.includes(:participatable).order(score: :desc)
   end
 
   def new
@@ -22,25 +23,6 @@ class MatchesController < ApplicationController
     set_options(__method__)
   end
 
-  # def create
-  #   @match = Match.new(match_params.except(:participants, :scores))
-
-  #   if @match.save
-  #     match_saved = true
-  #     scores = match_params[:scores]
-  #     match_params[:participants].each_with_index do |p, index|
-  #       @match.participations.create!(score: scores[index], participatable_id: p.to_i, participatable_type: "Player")
-  #     end
-  #   end
-
-  #   if match_saved
-  #     flash[:success] = "Match was successfully created."
-  #     redirect_to matches_path
-  #   else
-  #     set_options(:new)
-  #     render :new, status: :unprocessable_entity
-  #   end
-  # end
   def create
     @match = Match.new(match_params)
 

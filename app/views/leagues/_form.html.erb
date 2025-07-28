@@ -1,4 +1,4 @@
-<%= form_with(model: league, class: 'admin_form pt-4 my-2') do |form| %>
+<%= form_with(model: league, class: 'admin_form pt-4 my-1') do |form| %>
   <% if league.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(league.errors.count, "error") %> prohibited this league from being saved:</h2>

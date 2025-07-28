@@ -17,17 +17,22 @@ export default class extends Controller {
       const playerSelect = document.createElement("select")
       playerSelect.name = `match[participations_attributes][${i}][participatable_id]`
 
-       this.playersValue.forEach(player => {
+      this.playersValue.forEach(player => {
         const option = document.createElement("option")
         option.value = player.id
         option.textContent = player.name
         playerSelect.appendChild(option)
       })
 
+      if (i < playerSelect.options.length) {
+      playerSelect.selectedIndex = i;
+      }
+
       const scoreInput = document.createElement("input")
       scoreInput.type = "number"
       scoreInput.name = `match[participations_attributes][${i}][score]`
       scoreInput.placeholder = `Player ${i + 1} Score`
+      scoreInput.classList.add("ms-1")
 
       wrapper.appendChild(playerSelect)
       wrapper.appendChild(scoreInput)

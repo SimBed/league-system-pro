@@ -1,4 +1,4 @@
-<%= form_with(model: player, class: 'admin_form pt-4 my-2') do |form| %>
+<%= form_with(model: player, class: 'admin_form pt-4 my-1') do |form| %>
   <% if player.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(player.errors.count, "error") %> prohibited this player from being saved:</h2>

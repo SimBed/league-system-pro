@@ -1,5 +1,6 @@
 class PlayersController < ApplicationController
-  before_action :set_player, only: %i[ show edit update destroy ]
+  before_action :authenticate_user!
+  before_action :set_player, only: %i[ show edit update destroy league_filter ]
 
   def index
     @players = Player.all
@@ -7,9 +8,21 @@ class PlayersController < ApplicationController
   end
 
   def show
-    @leagues = [ [ "All", nil, { "data-showurl" => player_path(@player) } ] ] +
-                @player.leagues.map { |l| [ l.full_name, l.id, { "data-showurl" => player_url(@player.id, { league_id: l.id }) } ] }
-    @participations = @player.participations.includes(match: [ :league ])
+    @league_options = [ [ "All", nil ] ] +
+                        @player.leagues.order_by_created_at.distinct.map { |league| [ league.full_name, league.id ] }
+    @participations = @player.participations.
+                              merge(Match.order_by_date).
+                              includes(match: [ :league ]).
+                              then { |chain| session.dig(:player_league_ids, @player.id.to_s).present? ? chain.where(matches: { league_id: session.dig(:player_league_ids, @player.id.to_s) }) : chain }
+  end
+
+  def league_filter
+    session[:player_league_ids]&.delete(@player.id.to_s)
+    if (league_id = params[:player_league_id].presence) # when 'All' is selected', nil is passed and the conditional is false so the session[:player_league_ids] for the player does not get set (remains nil).
+      session[:player_league_ids] ||= {}
+      session[:player_league_ids][@player.id.to_s] = league_id.to_i
+    end
+    redirect_to @player
   end
 
   # GET /players/new
@@ -50,6 +63,10 @@ class PlayersController < ApplicationController
   private
     def set_player
       @player = Player.find(params.expect(:id))
+    end
+
+    def set_league
+      @league = League.find_by(id: params[:league_id]) || "All"
     end
 
     def handle_index_response

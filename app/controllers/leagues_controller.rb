@@ -1,8 +1,9 @@
 class LeaguesController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_league, only: %i[ show edit update destroy ]
 
   def index
-    @leagues = League.includes(:matches)
+    @leagues = League.order_by_created_at.includes(:matches)
     @league_leaders = Player.with_league_stats.group_by(&:league_id).transform_values do |players|
       players.max_by(&:total_score)
     end

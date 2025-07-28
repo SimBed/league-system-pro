@@ -1,9 +1,12 @@
 Rails.application.routes.draw do
+  get "pages/home"
   devise_for :users
 
-  root "leagues#index"
+  root "pages#home"
 
-  resources :players
+  resources :players do
+    get "league_filter", on: :member
+  end
   resources :teams
   resources :matches do
     get "filter", on: :collection

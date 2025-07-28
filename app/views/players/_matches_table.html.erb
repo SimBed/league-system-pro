@@ -14,7 +14,7 @@
             <%= participation.match.date.strftime('%d/%m/%y') %>
           </div>
           <div class="column col-2x"><%= participation.score %></div>
-          <div class="column col-2x"><%= link_to participation.match.league.name,
+          <div class="column col-2x"><%= link_to participation.match.league.full_name,
                                                 league_path(participation.match.league, link_from: 'player_show'), class: 'buttonlike' %></div>
         </div>
       <% end %>
