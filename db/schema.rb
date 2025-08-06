@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_07_22_085524) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_06_084317) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -35,7 +35,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_07_22_085524) do
   end
 
   create_table "participations", force: :cascade do |t|
-    t.integer "score", null: false
+    t.decimal "score", precision: 5, scale: 1, null: false
     t.bigint "match_id", null: false
     t.string "participatable_type", null: false
     t.bigint "participatable_id", null: false
