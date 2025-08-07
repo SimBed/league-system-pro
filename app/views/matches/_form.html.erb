@@ -21,7 +21,7 @@
   <%= form.fields_for :participations do |p_fields| %>
     <div class="d-flex flex-row mb-0">
       <%= p_fields.select :participatable_id,
-            options_from_collection_for_select(@players, :id, :full_name, p_fields.object.participatable_id) %>
+        options_from_collection_for_select(@players, :id, :full_name, p_fields.object.participatable_id) %>
       <%= p_fields.number_field :score, min: -9999, max: 9999, step: 0.1, class: 'ms-1' %>
     </div>
   <% end %>

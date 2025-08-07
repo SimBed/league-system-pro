@@ -163,17 +163,7 @@ h2 form {
   }
 }
 
-.settings-scope .form-control.number-field {
-  padding-top:0;
-  padding-bottom:0;
-  width: 5rem;
-}
-
-.settings-scope span.fixed-width-label {
-  display: inline-block;
-  width: 4rem;
-  margin-right: 0.25rem;
-  @include media-breakpoint-up(sm) {
-    width: 6rem;
-  }  
+input.score {
+// using character width units as 'Player X Score' is fixed 14/15 characters 
+  width: 16ch;
 }

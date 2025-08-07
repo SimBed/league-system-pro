@@ -1,8 +1,7 @@
 <%= form_with(model: player, class: 'admin_form pt-4 my-1') do |form| %>
   <% if player.errors.any? %>
-    <div style="color: red">
+    <div id="error_explanation">
       <h2><%= pluralize(player.errors.count, "error") %> prohibited this player from being saved:</h2>
-
       <ul>
         <% player.errors.each do |error| %>
           <li><%= error.full_message %></li>
@@ -12,21 +11,16 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :first_name, style: "display: block" %>
+    <%= form.label :first_name %>
     <%= form.text_field :first_name %>
   </div>
 
   <div class="field">
-    <%= form.label :last_name, style: "display: block" %>
+    <%= form.label :last_name %>
     <%= form.text_field :last_name %>
   </div>
 
-  <div class="field">
-    <%= form.label :team_id, style: "display: block" %>
-    <%= form.text_field :team_id %>
-  </div>
-
-  <div>
+  <div class="actions mt-2">
     <%= form.submit %>
   </div>
 

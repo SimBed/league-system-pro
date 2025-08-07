@@ -31,11 +31,12 @@ export default class extends Controller {
       const scoreInput = document.createElement("input")
       scoreInput.type = "number"
       scoreInput.name = `match[participations_attributes][${i}][score]`
-      scoreInput.min = -9999,
+      scoreInput.min = -9999
       scoreInput.max = 9999
       scoreInput.step = 0.1      
       scoreInput.placeholder = `Player ${i + 1} Score`
       scoreInput.classList.add("ms-1")
+      scoreInput.classList.add("score")
 
       wrapper.appendChild(playerSelect)
       wrapper.appendChild(scoreInput)

@@ -1,6 +1,6 @@
 <%= form_with(model: league, class: 'admin_form pt-4 my-1') do |form| %>
   <% if league.errors.any? %>
-    <div style="color: red">
+    <div id="error_explanation">
       <h2><%= pluralize(league.errors.count, "error") %> prohibited this league from being saved:</h2>
 
       <ul>
@@ -12,22 +12,22 @@
   <% end %>
 
   <div class="field">
-    <%= form.label :name, style: "display: block" %>
+    <%= form.label :name %>
     <%= form.text_field :name %>
   </div>
 
   <div class="field">
-    <%= form.label :season, style: "display: block" %>
+    <%= form.label :season %>
     <%= form.text_field :season %>
   </div>
 
   <div class="field">
-    <%= form.label :participants_per_match, style: "display: block" %>
+    <%= form.label :participants_per_match %>
     <%= form.number_field :participants_per_match %>
   </div>
 
   <div class="field">
-    <%= form.label :participant_type, style: "display: block" %>
+    <%= form.label :participant_type %>
     <%= form.text_field :participant_type %>
   </div>
 

@@ -77,6 +77,6 @@ class PlayersController < ApplicationController
     end
 
     def player_params
-      params.expect(player: [ :first_name, :last_name, :team_id ])
+      params.expect(player: [ :first_name, :last_name ])
     end
 end
