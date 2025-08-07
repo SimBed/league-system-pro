@@ -6,16 +6,18 @@
       <div class="row">
         <div class="column col-1x">Name</div>
         <div class="column col-1x">Matches</div>
-        <div class="column col-1x">Score</div>
+        <div class="column col-1x"><%= sortable(column: "total_score", match_id: @match_id) %></div>
         <div class="column col-1x">Average Score</div>
+        <div class="column col-1x"><%= sortable(column: "wins", match_id: @match_id) %></div>
         <div class="column col-1x">Position</div>
       </div>
     <% @participants.each_with_index do |participant, index| %>
       <div class="row">
         <div class="column col-1x"><%= link_to participant.full_name, participant, class: 'buttonlike', data: {turbo: false} %></div>
         <div class="column col-1x"><%= participant.matches_played %></div>
-        <div class="column col-1x"><%= participant.total_score.round(2) %></div>
-        <div class="column col-1x"><%= participant.average_score.round(2) %></div>
+        <div class="column col-1x"><%= number_with_delimiter(participant.total_score.round(2)) %></div>
+        <div class="column col-1x"><%= number_with_delimiter(participant.average_score.round(2)) %></div>
+        <div class="column col-1x"><%= participant.wins %></div>
         <div class="column col-1x"><%= index + 1 %></div>
       </div>
     <% end %>
