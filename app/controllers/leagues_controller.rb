@@ -1,4 +1,5 @@
 class LeaguesController < ApplicationController
+  include SortHelper
   helper_method :sort_column, :sort_direction
   before_action :authenticate_user!
   before_action :set_league, only: %i[ show edit update destroy ]
@@ -14,9 +15,14 @@ class LeaguesController < ApplicationController
   def show
     # @participants = Player.with_league_stats(league_id: @league.id).order("total_score DESC, first_name ASC")
     @sort_direction = sort_direction
-    @participants = Player.with_league_stats(league_id: @league.id)
-                          .order("#{sort_column('show')} #{@sort_direction},
-                                  total_score #{@sort_direction}, first_name ASC")
+    @sort_column = sort_column
+    # e.g. [ "wins" ]
+    tie_breakers = SORT_TIE_BREAKERS[sort_column] || SORT_TIE_BREAKERS[:default]
+    # e.g. [ total_score ASC, wins ASC, first_name ASC ]
+    order_columns = [ "#{sort_column} #{sort_direction}" ] +
+                    tie_breakers.map { |col| "#{col} #{sort_direction}" } +
+                    [ "first_name ASC" ]
+    @participants = Player.with_league_stats(league_id: @league.id).order(order_columns.join(", "))
     @match_id = params[:match_id]
     get_form_cancel_link
     @frame_id = @match_id ? "show_league_for_match_#{@match_id}" : "league_#{@league.id}"
@@ -70,8 +76,7 @@ class LeaguesController < ApplicationController
       params.expect(league: [ :name, :season, :participants_per_match, :participant_type ])
     end
 
-    def sort_column(_view)
-      # in this context view won't be used hence the underscore (as advised by Rubocop)
+    def sort_column
       # Sanitizing the search options, so only items specified in the list can get through
       %w[score wins].include?(params[:sort]) ? params[:sort] : "total_score"
     end
