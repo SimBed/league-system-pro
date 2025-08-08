@@ -3,9 +3,10 @@ class LeaguesController < ApplicationController
   helper_method :sort_column, :sort_direction
   before_action :authenticate_user!
   before_action :set_league, only: %i[ show edit update destroy ]
+  before_action :authorize_league_access, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @leagues = League.order_by_created_at.includes(:matches)
+    @leagues = current_user.leagues.order_by_created_at.includes(:matches)
     @league_leaders = Player.with_league_stats.group_by(&:league_id).transform_values do |players|
       players.max_by(&:total_score)
     end
@@ -38,6 +39,7 @@ class LeaguesController < ApplicationController
   def create
     @league = League.new(league_params)
     if @league.save
+      current_user.league_auths.create!(league: @league, role: :admin)
       flash[:success] = "League was successfully created."
       redirect_to leagues_path
     else
@@ -90,5 +92,11 @@ class LeaguesController < ApplicationController
       @show_cancel = params[:link_from] == "player_show" ? false : true
 
       @form_cancel_link = @match_id ? matches_path : leagues_path
+    end
+
+    def authorize_league_access
+      unless @league.users.include?(current_user)
+        redirect_to root_path, alert: "You are not authorized to view this league."
+      end
     end
 end

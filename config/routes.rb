@@ -11,7 +11,10 @@ Rails.application.routes.draw do
   resources :matches do
     get "filter", on: :collection
   end
-  resources :leagues
+
+  resources :leagues do
+    resources :league_auths, only: [ :create, :destroy ]
+  end
 
   get "up" => "rails/health#show", as: :rails_health_check
 end

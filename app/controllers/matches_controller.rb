@@ -64,8 +64,8 @@ class MatchesController < ApplicationController
     end
 
     def set_options(method)
-      @league_options = League.order_by_created_at.map { |league| [ league.full_name, league.id ] }
-      @leagues = League.order_by_created_at
+      @league_options = current_user.leagues.order_by_created_at.map { |league| [ league.full_name, league.id ] }
+      @leagues = current_user.leagues.order_by_created_at
       case method
       when :new
         @players = Player.all
@@ -80,8 +80,13 @@ class MatchesController < ApplicationController
     end
 
     def handle_selection
-      session[:league] = session[:league] || League.minimum(:id)
-      @matches = Match.where(league_id: session[:league].to_i).order_by_date.includes(:league)
+      session[:league] = session[:league] || current_user.leagues.minimum(:id)
+      # check session[:league] still authorised
+      @matches =  if session[:league].nil? || !current_user.leagues.pluck(:id).include?(session[:league].to_i)
+        []
+      else
+        Match.where(league_id: session[:league].to_i).order_by_date.includes(:league)
+      end
     end
 
     def handle_index_response

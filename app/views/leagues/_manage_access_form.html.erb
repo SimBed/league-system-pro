@@ -1,0 +1,29 @@
+<% if @league.league_auths.find_by(user: current_user)&.admin? %>
+  <div class="canvas gray100-canvas embossed mt-1 mb-2">
+    <div class="fst-italic fw-bolder ps-2">Manage Membership</div>
+    <div class="admin-table mt-2 mb-4">
+      <h2 class="fst-italic ps-1 fs-9">Add Users</h2>
+      <%= form_with url: league_league_auths_path(@league), class: 'ps-1' do %>
+        <%= text_field_tag :email, nil, placeholder: "User Email" %>
+        <div class="actions mt-1 d-inline">
+          <%= submit_tag "Add" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="admin-table mt-2 mb-4">
+      <h2 class="fst-italic ps-2 fs-9">Remove Users</h2>
+      <ul class="list-group">
+        <% @league.league_auths.each do |membership| %>
+          <li class="list-group-item">
+            <%= membership.user.email %>
+            <% unless membership.admin? %>
+              <%= link_to image_tag('delete.png', class: "table_icon"), league_league_auth_path(@league, membership),
+                            method: :delete, data: { turbo_method: :delete, confirm: "Remove user?" } %>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+<% end %>

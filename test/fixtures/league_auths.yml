@@ -1,0 +1,10 @@
+one:
+  user: one
+  league: league1
+  role: admin
+
+two:
+  user: one
+  league: league2
+  role: admin
+

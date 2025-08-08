@@ -1,5 +1,7 @@
 class League < ApplicationRecord
   has_many :matches, dependent: :destroy
+  has_many :league_auths, dependent: :destroy
+  has_many :users, through: :league_auths
   scope :order_by_created_at, -> { order(created_at: :desc) }
 
   def full_name

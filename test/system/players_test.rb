@@ -21,7 +21,6 @@ class PlayersTest < ApplicationSystemTestCase
 
     fill_in "First name", with: @player.first_name
     fill_in "Last name", with: @player.last_name
-    fill_in "Team", with: nil
     click_on "Create Player"
 
     assert_text "Player was successfully created"

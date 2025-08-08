@@ -10,9 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_06_084317) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_08_183719) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "league_auths", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "league_id", null: false
+    t.integer "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["league_id"], name: "index_league_auths_on_league_id"
+    t.index ["role"], name: "index_league_auths_on_role"
+    t.index ["user_id"], name: "index_league_auths_on_user_id"
+  end
 
   create_table "leagues", force: :cascade do |t|
     t.string "name", null: false
@@ -75,6 +86,8 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_06_084317) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "league_auths", "leagues"
+  add_foreign_key "league_auths", "users"
   add_foreign_key "matches", "leagues"
   add_foreign_key "participations", "matches"
   add_foreign_key "players", "teams"
