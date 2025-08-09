@@ -31,7 +31,8 @@ class MatchesController < ApplicationController
       redirect_to matches_path
     else
       set_options(:new)
-      render :new, status: :unprocessable_entity
+      # render edit to retain inputs (rather than new which will lose the inputs and start league selection...dynamic form process again)
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -68,10 +69,10 @@ class MatchesController < ApplicationController
       @leagues = current_user.leagues.order_by_created_at
       case method
       when :new
-        @players = Player.all
+        @players = current_user.players.order_by_name
         @date = Time.zone.today
       when :edit
-        @players = Player.all
+        @players = current_user.players.order_by_name
         @date = @match.date
         @score_hash = @match.participations.index_by(&:participatable_id).transform_values(&:score)
         # {23=>10, 24=>5, 25=>0} key is participatable id, value is score

@@ -7,16 +7,16 @@ class LeagueAuthsController < ApplicationController
     user = User.find_by(email: params[:email])
     if user && !@league.users.include?(user)
       @league.league_auths.create!(user: user, role: :member)
-      redirect_to @league, notice: "#{user.email} added to league."
+      redirect_to @league, notice: "Authorisation for #{user.email} added to league."
     else
-      redirect_to @league, alert: "User not found or already a member."
+      redirect_to @league, alert: "User not found or already aauthorised."
     end
   end
 
   def destroy
-    membership = @league.league_auths.find(params[:id])
-    membership.destroy
-    redirect_to @league, notice: "User removed from league."
+    auth = @league.league_auths.find(params[:id])
+    auth.destroy
+    redirect_to @league, notice: "User authorisation removed from league."
   end
 
   private
@@ -27,7 +27,7 @@ class LeagueAuthsController < ApplicationController
 
   def ensure_admin!
     unless @league.league_auths.find_by(user: current_user)&.admin?
-      redirect_to root_path, alert: "Only the owner can manage memberships."
+      redirect_to root_path, alert: "Only admin can manage authorisations."
     end
   end
 end

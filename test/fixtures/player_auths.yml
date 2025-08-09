@@ -1,0 +1,9 @@
+one:
+  user: one
+  player: dan
+  role: admin
+
+two:
+  user: one
+  player: kev
+  role: admin

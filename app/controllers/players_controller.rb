@@ -1,9 +1,10 @@
 class PlayersController < ApplicationController
   before_action :authenticate_user!
   before_action :set_player, only: %i[ show edit update destroy league_filter ]
+  before_action :authorize_player_access, only: [ :show, :edit, :update, :destroy ]
 
   def index
-    @players = Player.all
+    @players = current_user.players.order_by_name
     handle_index_response
   end
 
@@ -25,12 +26,10 @@ class PlayersController < ApplicationController
     redirect_to @player
   end
 
-  # GET /players/new
   def new
     @player = Player.new
   end
 
-  # GET /players/1/edit
   def edit
   end
 
@@ -38,6 +37,7 @@ class PlayersController < ApplicationController
     @player = Player.new(player_params)
 
     if @player.save
+      current_user.player_auths.create(player: @player, role: :admin)
       flash[:success] = "Player was successfully created."
       redirect_to players_path
     else
@@ -78,5 +78,11 @@ class PlayersController < ApplicationController
 
     def player_params
       params.expect(player: [ :first_name, :last_name ])
+    end
+
+    def authorize_player_access
+      unless @player.users.include?(current_user)
+        redirect_to root_path, alert: "You are not authorized to take this action."
+      end
     end
 end

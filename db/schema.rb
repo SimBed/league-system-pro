@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_08_183719) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_09_103926) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -56,6 +56,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_08_183719) do
     t.index ["participatable_type", "participatable_id"], name: "index_participations_on_participatable"
   end
 
+  create_table "player_auths", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "player_id", null: false
+    t.integer "role"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["player_id"], name: "index_player_auths_on_player_id"
+    t.index ["role"], name: "index_player_auths_on_role"
+    t.index ["user_id"], name: "index_player_auths_on_user_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string "first_name", null: false
     t.string "last_name", null: false
@@ -90,5 +101,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_08_183719) do
   add_foreign_key "league_auths", "users"
   add_foreign_key "matches", "leagues"
   add_foreign_key "participations", "matches"
+  add_foreign_key "player_auths", "players"
+  add_foreign_key "player_auths", "users"
   add_foreign_key "players", "teams"
 end

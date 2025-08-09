@@ -6,6 +6,7 @@ Rails.application.routes.draw do
 
   resources :players do
     get "league_filter", on: :member
+    resources :player_auths, only: [ :create, :destroy ]
   end
   resources :teams
   resources :matches do

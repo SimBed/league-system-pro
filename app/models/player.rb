@@ -3,6 +3,9 @@ class Player < ApplicationRecord
   has_many :participations, as: :participatable, dependent: :destroy
   has_many :matches, through: :participations
   has_many :leagues, through: :matches
+  has_many :player_auths, dependent: :destroy
+  has_many :users, through: :player_auths
+  scope :order_by_name, -> { order(:first_name, :last_name) }
 
   def self.with_league_stats(league_id: nil)
     # https://ruby-doc.org/core-2.5.0/doc/syntax/literals_rdoc.html To call a method on a heredoc place it after the opening identifier:

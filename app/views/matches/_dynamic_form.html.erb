@@ -29,13 +29,11 @@
 
   <div data-match-form-target="participants"></div>
 
-  <div class="actions mt-3">
-    <%= form.submit %>
+  <%# add submit button dynamically once the user has selected a league %>
+  <div data-match-form-target="submit" class="actions mt-3">
+    <%#= form.submit %>
   </div>
 
-  <% if match.new_record? %>
-    <div class='cancel' data-controller="form-cancel"><%= link_to 'X', '#', data: { action: 'form-cancel#cancel' } %> </div>  
-  <% else %>
-    <div class='cancel'><%= link_to 'X', matches_path %> </div>  
-  <% end %>  
+  <div class='cancel' data-controller="form-cancel"><%= link_to 'X', '#', data: { action: 'form-cancel#cancel' } %> </div>  
+
 <% end %>

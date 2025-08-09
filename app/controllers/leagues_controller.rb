@@ -96,7 +96,7 @@ class LeaguesController < ApplicationController
 
     def authorize_league_access
       unless @league.users.include?(current_user)
-        redirect_to root_path, alert: "You are not authorized to view this league."
+        redirect_to root_path, alert: "You are not authorized to take this action."
       end
     end
 end

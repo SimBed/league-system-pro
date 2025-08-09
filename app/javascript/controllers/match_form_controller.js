@@ -1,11 +1,12 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["participants"]
+  static targets = ["participants", "submit"]
   static values = { players: Array }
 
   updateFields(event) {
     const selectedOption = event.target.selectedOptions[0]
+    console.log(event.target.options.length) 
     const count = parseInt(selectedOption.dataset.participantsPerMatch || 0, 10)
 
     this.participantsTarget.innerHTML = ""
@@ -43,6 +44,11 @@ export default class extends Controller {
 
       this.participantsTarget.appendChild(wrapper)
     }
+      // create submit button dynamically to avoid submission before playerSelect/scoreInput exists
+      const submitBtn = document.createElement("input")
+      submitBtn.type = 'submit'
+      submitBtn.value = 'Create Match'
+      this.submitTarget.appendChild(submitBtn)
   }
 }
 
