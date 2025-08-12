@@ -38,6 +38,7 @@ class LeaguesController < ApplicationController
 
   def create
     @league = League.new(league_params)
+    @league.creator = current_user
     if @league.save
       current_user.league_auths.create!(league: @league, role: :admin)
       flash[:success] = "League was successfully created."

@@ -2,9 +2,9 @@ league1:
   name: League1
   season: Season1
   participants_per_match: 3
-  participant_type: 'Player'
+  participant_type: 'player'
 league2:
   name: League1
   season: Season2
   participants_per_match: 3
-  participant_type: 'Player'
+  participant_type: 'player'

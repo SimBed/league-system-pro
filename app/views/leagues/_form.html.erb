@@ -5,8 +5,10 @@
 
       <ul>
         <% league.errors.each do |error| %>
+          <!-- skip empty season error, which implies name/season uniqueness validation failure and name uniqueness already shown -->        
+          <% next if error.attribute == :season && error.type.blank? %> 
           <li><%= error.full_message %></li>
-        <% end %>
+        <% end %>        
       </ul>
     </div>
   <% end %>
@@ -23,12 +25,12 @@
 
   <div class="field">
     <%= form.label :participants_per_match %>
-    <%= form.number_field :participants_per_match %>
+    <%= form.number_field :participants_per_match, min: 1, max: 10 %>
   </div>
 
   <div class="field">
     <%= form.label :participant_type %>
-    <%= form.text_field :participant_type %>
+    <%= form.select :participant_type, %w[player team] %>
   </div>
 
   <div class="actions mt-3">
