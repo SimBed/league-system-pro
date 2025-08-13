@@ -4,6 +4,7 @@
       <h2><%= pluralize(player.errors.count, "error") %> prohibited this player from being saved:</h2>
       <ul>
         <% player.errors.each do |error| %>
+          <% next if error.attribute == :last_name && error.type.blank? %> 
           <li><%= error.full_message %></li>
         <% end %>
       </ul>

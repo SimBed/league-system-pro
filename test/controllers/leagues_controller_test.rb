@@ -36,7 +36,7 @@ class LeaguesControllerTest < ActionDispatch::IntegrationTest
       post leagues_path, params: { league: { name: @league.name,
                                              season: "Season3",
                                              participants_per_match: 2,
-                                             participant_type: "Player" } }
+                                             participant_type: "player" } }
     end
 
     assert_redirected_to leagues_path

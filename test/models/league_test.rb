@@ -41,7 +41,7 @@ class LeagueTest < ActiveSupport::TestCase
     refute @league.valid?
   end
 
-  test "name and season combo should be unique per owner" do
+  test "name and season combo should be unique per creator" do
     # duplicate league name/season generally ok
     league = @league.dup
     assert league.valid?

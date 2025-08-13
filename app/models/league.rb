@@ -6,8 +6,6 @@ class League < ApplicationRecord
   before_validation :titleize_full_name
   validates :name, presence: true, length: { maximum: 20 }
   validates :season, presence: true, length: { maximum: 20 }
-  # validates :participants_per_match, presence: true
-  validates :participant_type, presence: true
   validates :participants_per_match, numericality: { only_integer: true, in: (1..10) }
   validates :participant_type, inclusion: { in: %w[ player team ] }
   # validates :name, uniqueness: { scope: :season, message: "this name/season combination already taken" }
@@ -18,7 +16,7 @@ class League < ApplicationRecord
     "#{name} #{season}"
   end
 
-  # assumes just 1 admin for now
+  # assumes league has just 1 admin for now
   def admin
     users.joins(:league_auths)
          .find_by(league_auths: { role: :admin })
@@ -38,7 +36,7 @@ class League < ApplicationRecord
     duplicates = duplicates.where.not(id: id) if persisted?
     error_message = "You already have a league named #{name} for Season #{season}"
     if duplicates.exists?
-      # want 1 error message but both fields hlighted  - used in conjunction with skippin an error message in the form's league.errors.any? loop
+      # want 1 error message but both fields hilighted  - used in conjunction with skipping an error message in the form's league.errors.any? loop
       errors.add(:name, error_message)
       errors.add(:season, "")
     end

@@ -1,15 +1,19 @@
 class Player < ApplicationRecord
+  attr_accessor :creator # allows a check on name uniqueness (per admin) at time of creation.
   belongs_to :team, optional: true
   has_many :participations, as: :participatable, dependent: :destroy
   has_many :matches, through: :participations
   has_many :leagues, through: :matches
   has_many :player_auths, dependent: :destroy
   has_many :users, through: :player_auths
+  before_validation :titleize_full_name
+  validates :first_name, presence: true, length: { maximum: 20 }
+  validates :last_name, presence: true, length: { maximum: 20 }
+  validate :full_name_unique_for_admin
   scope :order_by_name, -> { order(:first_name, :last_name) }
 
   def self.with_league_stats(league_id: nil)
     # https://ruby-doc.org/core-2.5.0/doc/syntax/literals_rdoc.html To call a method on a heredoc place it after the opening identifier:
-    # COUNT(CASE WHEN p.score = max_scores.max_score THEN 1 END) AS wins
     with(
         # Step 1: Get max score per match
         max_scores: Participation
@@ -47,5 +51,29 @@ class Player < ApplicationRecord
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  def admin
+    users.joins(:player_auths)
+         .find_by(player_auths: { role: :admin })
+  end
+
+  private
+
+  def titleize_full_name
+  self.first_name = first_name.strip.titleize
+  self.last_name = last_name.strip.titleize
+  end
+
+  def full_name_unique_for_admin
+    return unless creator
+
+    duplicates = creator.players.where([ "first_name = ? and last_name = ?", first_name, last_name ]).then { |chain| persisted? ? chain.where.not(id: id) : chain }
+    error_message = "You already have a player named #{full_name}"
+    if duplicates.exists?
+      # want 1 error message but both fields hilighted  - used in conjunction with skipping an error message in the form's player.errors.any? loop
+      errors.add(:first_name, error_message)
+      errors.add(:last_name, "")
+    end
   end
 end

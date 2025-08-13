@@ -35,6 +35,7 @@ class PlayersController < ApplicationController
 
   def create
     @player = Player.new(player_params)
+    @player.creator = current_user
 
     if @player.save
       current_user.player_auths.create(player: @player, role: :admin)
