@@ -1,0 +1,4 @@
+<%= turbo_stream.replace 'league_user_authorisation' do %>
+  <%= render "league_auths/user_section_body" %>
+<% end %>
+<%= turbo_stream.prepend("flash", partial: "layouts/flash") %>

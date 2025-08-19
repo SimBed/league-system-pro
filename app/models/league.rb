@@ -3,10 +3,12 @@ class League < ApplicationRecord
   has_many :matches, dependent: :destroy
   has_many :league_auths, dependent: :destroy
   has_many :users, through: :league_auths
+  has_many :memberships, dependent: :destroy
+  has_many :players, through: :memberships
   before_validation :titleize_full_name
   validates :name, presence: true, length: { maximum: 20 }
   validates :season, presence: true, length: { maximum: 20 }
-  validates :participants_per_match, numericality: { only_integer: true, in: (1..10) }
+  validates :participants_per_match, numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 10 }
   validates :participant_type, inclusion: { in: %w[ player team ] }
   # validates :name, uniqueness: { scope: :season, message: "this name/season combination already taken" }
   validate :full_name_unique_for_admin

@@ -1,0 +1,4 @@
+<%= turbo_stream.replace 'league_membership' do %>
+  <%= render "memberships/player_section_body" %>
+<% end %>
+<%= turbo_stream.prepend("flash", partial: "layouts/flash") %>

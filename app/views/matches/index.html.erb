@@ -1,14 +1,53 @@
-<div class="container px-1">
-  <h5 class='mb-2'>Matches 
-    <%= link_to new_match_path, data: { turbo_frame: dom_id(Match.new)} do %>
-      <i class="bi bi-database-fill-add"></i>
+<!--div class="fst-italic fw-bolder ps-2">Matches</div-->
+<%= turbo_frame_tag 'matches' do %>
+  <div class="admin-table mt-2">
+    <div class="row fw-bolder">
+      <div class="column col-1x">Match</div>
+      <div class="column col-2x">Date</div>
+        <div class="column col-2x">Winner</div>
+        <div class="column col-2x">Winning Score</div>
+      <div class="column"></div>
+      <div class="column nomobile"></div>
+    </div>
+  </div>
+  <div class="admin-table">
+    <% matches_size = @matches.size %>    
+    <% @matches.each_with_index do |match, index| %>
+      <%= turbo_frame_tag match do %>
+        <div class="row">
+          <div class="column col-1x"><%= matches_size - index %></div>
+          <div class="column col-2x"><%= match.date.strftime '%d %b %Y' %></div>
+          <div class="column col-2x"><%= match.top_participations[:winner] %></div>
+          <div class="column col-2x"><%= match.top_participations[:winning_score] %></div>
+          <div class="column"><%= link_to match_path(match) do %>
+                                            <i class="bi bi-clipboard"></i>
+                                          <% end %>
+          </div>
+          <div class="column nomobile"><%= link_to edit_match_path(match) do %>
+                                                    <i class="bi bi-pencil-fill"></i>
+                                                  <% end %>
+          </div>
+        </div>
+      <% end %>
     <% end %>
-  </h5>
-  <%= turbo_frame_tag Match.new %>
-  <%= turbo_frame_tag 'matches-and-filter' do %>
-    <%= render 'filter_form' %>
-    <%= turbo_frame_tag 'matches' do %>
-      <%= render 'matches_table' %>
+  </div>
+<% end %>
+
+<% if false %>
+  <div class="container px-1">
+    <h5 class='mb-2'>Matches 
+      <% if session[:league_id] %>
+        <%= link_to new_match_path, data: { turbo_frame: dom_id(Match.new)} do %>
+          <i class="bi bi-database-fill-add"></i>
+        <% end %>
+      <% end %>
+    </h5>
+    <%= turbo_frame_tag Match.new %>
+    <%= turbo_frame_tag 'matches-and-filter' do %>
+      <%= render 'filter_form' %>
+      <%= turbo_frame_tag 'matches' do %>
+        <%= render 'matches_table' %>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
+  </div>
+<% end %>

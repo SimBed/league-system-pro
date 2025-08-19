@@ -1,0 +1,25 @@
+<div class="canvas gray100-canvas embossed mt-1 mb-2">
+  <div class="fst-italic fw-bolder ps-2">Manage Memberships</div>
+  <div class="admin-table mt-2 mb-4">
+    <h2 class="fst-italic ps-1 fs-9">Add Players</h2>
+    <%= form_with url: league_memberships_path(@league), class: 'ps-1' do |form| %>
+      <%= form.select :player_id, options_for_select(@addable_players.map {|p| [p.full_name, p.id]}), {}, { class: "sort" } %>
+      <div class="d-inline image_actions">
+        <%= form.submit 'add' %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="admin-table mt-2 mb-4">
+    <h2 class="fst-italic ps-2 fs-9">Remove Players</h2>
+    <ul class="list-group">
+      <% @memberships.each do |membership| %>
+        <li class="list-group-item">
+          <%= membership.player.first_name %>
+            <%= link_to image_tag('delete.png', class: "table_icon"), league_membership_path(@league, membership),
+                          method: :delete, data: { turbo_method: :delete, confirm: "Remove player?" } %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</div>

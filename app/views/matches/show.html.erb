@@ -1,6 +1,6 @@
 <%= turbo_frame_tag @match do %>
 <div id="match-table" class="canvas gray100-canvas embossed mt-1 mb-2">
-  <div class="fst-italic ps-2"><%= "Match #{@match.number} of #{@match.league.full_name}, #{@match.date.strftime('%d %b %y')}" %></div>
+  <div class="fst-italic ps-2"><%= "Match #{@match.number}, #{@match.date.strftime('%d %b %y')}" %></div>
   <div class="admin-table mt-2 mb-4">
       <div class="row">
         <div class="column col-1x">Name</div>

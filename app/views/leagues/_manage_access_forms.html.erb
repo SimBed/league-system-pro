@@ -1,0 +1,6 @@
+<% if @league.league_auths.find_by(user: current_user)&.admin? %>
+  <%#= render 'manage_authorisations' %>
+  <%= render 'league_auths/user_section_body' %>
+  <%= render 'memberships/player_section_body' %>
+  <%#= render 'manage_memberships' %>
+<% end %>

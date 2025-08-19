@@ -34,7 +34,7 @@ class MatchesControllerTest < ActionDispatch::IntegrationTest
                                                } } }
     end
 
-    assert_redirected_to matches_path
+    assert_redirected_to @match.league
   end
 
   test "should show match when logged-in" do
@@ -45,6 +45,10 @@ class MatchesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get edit when logged-in" do
     sign_in @user
+    # can only edit match from league show, which sets session[:league_id] used (needlessly?) in MatchesController#edit, so go to league show first
+    get league_path(@match.league)
+    assert_response :success
+    refute_nil session[:league_id]
     get edit_match_path(@match)
     assert_response :success
   end
@@ -62,7 +66,7 @@ class MatchesControllerTest < ActionDispatch::IntegrationTest
 
     assert_equal original_score + 1, @match.participations.where(participatable_id: @dan.id).first.score
 
-    assert_redirected_to matches_path
+    assert_redirected_to @match.league
   end
 
   test "should destroy match when logged-in" do

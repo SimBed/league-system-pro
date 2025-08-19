@@ -1,0 +1,10 @@
+  <%= turbo_frame_tag 'league_user_authorisation',
+      src: league_auths_user_section_path(@league)
+      # loading: :lazy 
+   %>
+
+ <%# lazy loading gave problems in production with Intersection Observer not recognizing it -required manual screen resize to trigger, some CSS might mitigate
+  # turbo-frame#league_user_authorisation {
+  # display: block;      /* ensures it’s a box, not inline */
+  # min-height: 2rem;    /* gives IntersectionObserver something to detect */
+} %>

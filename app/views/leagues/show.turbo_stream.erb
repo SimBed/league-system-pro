@@ -1,0 +1,13 @@
+
+<%= turbo_stream.replace 'league-table' do %>
+  <%= render partial: "league_table" %>
+<% end %>
+<%#= turbo_stream.update "new_match" do %>
+  <%#= render inline:'' %>
+<%# end %>
+<%= turbo_stream.replace 'matches-table' do %>
+  <%= render "matches/matches_table" %>
+<% end %>
+<%= turbo_stream.prepend("flash", partial: "layouts/flash") %>
+
+

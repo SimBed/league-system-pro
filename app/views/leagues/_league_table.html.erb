@@ -1,0 +1,32 @@
+<!--turbo-frame id="table_league_27"-->
+<%#= turbo_frame_tag 'league-table' do %>
+<%= turbo_frame_tag @frame_id do %>
+  <div id="league-table" class="canvas gray100-canvas embossed mt-1 mb-2">
+
+    <div class="admin-table my-1">
+      <div class="row">
+        <div class="column col-1x">Name</div>
+        <div class="column col-1x">Matches</div>
+        <div class="column col-1x"><%= sortable(column: "wins", match_id: @match_id, sort_column: @sort_column, sort_direction: @sort_direction) %></div>
+        <div class="column col-1x"><%= sortable(column: "total_score", match_id: @match_id, sort_column: @sort_column, sort_direction: @sort_direction) %></div>
+        <div class="column col-1x">Average Score</div>
+        <div class="column col-1x">Position</div>
+      </div>
+      <% @participants.each_with_index do |participant, index| %>
+        <div class="row">
+          <div class="column col-1x"><%= link_to participant.full_name, participant, class: 'buttonlike', data: {turbo: false} %></div>
+          <div class="column col-1x"><%= participant.matches_played %></div>
+          <div class="column col-1x"><%= participant.wins.round(2) %></div>
+          <div class="column col-1x"><%= number_with_delimiter(participant.total_score.round(2)) %></div>
+          <div class="column col-1x"><%= number_with_delimiter(participant.average_score.round(2)) %></div>
+          <div class="column col-1x"><%= index + 1 %></div>
+        </div>
+      <% end %>
+      <% if @show_cancel %>
+        <div class="cancel">
+          <%= link_to image_tag('delete.png', class: "table_icon"), @form_cancel_link %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

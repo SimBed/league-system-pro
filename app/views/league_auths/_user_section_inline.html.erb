@@ -1,8 +1,8 @@
-<% if @league.league_auths.find_by(user: current_user)&.admin? %>
+<%= turbo_frame_tag 'league_user_authorisation' do %>
   <div class="canvas gray100-canvas embossed mt-1 mb-2">
     <div class="fst-italic fw-bolder ps-2">Manage Authorisation</div>
     <div class="admin-table mt-2 mb-4">
-      <h2 class="fst-italic ps-1 fs-9">Add Users</h2>
+      <h2 class="fst-italic ps-1 fs-9">Give Access to User:</h2>
       <%= form_with url: league_league_auths_path(@league), class: 'ps-1' do %>
         <%= text_field_tag :email, nil, placeholder: "User Email" %>
         <div class="actions mt-1 d-inline">
@@ -12,18 +12,18 @@
     </div>
 
     <div class="admin-table mt-2 mb-4">
-      <h2 class="fst-italic ps-2 fs-9">Remove Users</h2>
+      <h2 class="fst-italic ps-2 fs-9">Remove Access:</h2>
       <ul class="list-group">
-        <% @league.league_auths.each do |auth| %>
+        <% @league_auths.each do |auth| %>
           <li class="list-group-item">
             <%= auth.user.email %>
             <% unless auth.admin? %>
               <%= link_to image_tag('delete.png', class: "table_icon"), league_league_auth_path(@league, auth),
-                            method: :delete, data: { turbo_method: :delete, confirm: "Remove user?" } %>
+                            data: { turbo_method: :delete, turbo_confirm: "Remove user's authorisation for this league?" } %>
             <% end %>
           </li>
         <% end %>
       </ul>
     </div>
   </div>
-<% end %>
+<% end %>  

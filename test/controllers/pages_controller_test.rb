@@ -14,6 +14,6 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
   test "root should redirect to matches index when logged in" do
     sign_in @user
     get "/"
-    assert_redirected_to matches_path
+    assert_redirected_to leagues_path
   end
 end

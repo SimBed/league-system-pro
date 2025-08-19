@@ -6,6 +6,7 @@ class Player < ApplicationRecord
   has_many :leagues, through: :matches
   has_many :player_auths, dependent: :destroy
   has_many :users, through: :player_auths
+  has_many :memberships, dependent: :destroy
   before_validation :titleize_full_name
   validates :first_name, presence: true, length: { maximum: 20 }
   validates :last_name, presence: true, length: { maximum: 20 }

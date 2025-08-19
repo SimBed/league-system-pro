@@ -22,7 +22,7 @@ class LeaguesTest < ApplicationSystemTestCase
     fill_in "Name", with: @league.name
     fill_in "Season", with: "Season3"
     fill_in "Participants per match", with: @league.participants_per_match
-    fill_in "Participant type", with: "Player"
+    select "player", from: "Participant type"
 
     click_on "Create League"
 

@@ -1,24 +1,44 @@
 <%= turbo_frame_tag match do %>
   <div class="row">
+    <div class="column"><%= match.date.strftime '%d %b %Y' %></div>
     <div class="column col-2x">
-      <%= match.date.strftime('%d/%m/%y') %>
+      <%= match.date.strftime '%d %b %Y' %>
     </div>
-    <div class="column col-2x"><%= link_to match.league.name, league_path(match.league, match_id: match.id), class: 'buttonlike', data: {turbo_frame: "show_league_for_match_#{match.id}"} %></div>
-    <div class="column col-2x"><%= match.league.season %></div>
+    <div class="column col-2x"><%= match.top_participations %></div>
     <div class="column"><%= link_to match_path(match) do %>
                                       <i class="bi bi-clipboard"></i>
                                     <% end %>
     </div>
-    <div class="column nomobile"><%= link_to edit_match_path(match),
-                                             data: {turbo_frame: dom_id(match)} do %>
+    <div class="column nomobile"><%= link_to edit_match_path(match) do %>
                                                <i class="bi bi-pencil-fill"></i>
                                              <% end %>
     </div>
   </div>
+<% end %>
 
-  <%= turbo_frame_tag "show_league_for_match_#{match.id}" %>
-  <%#= require the match in the turbo_frame tag not just the league otherwise matches of the same league will have the same turbo-frame id and league will display in the wrong place %>
-  <%#= turbo_frame_tag match.league %>
+<% if false %>
+  <%= turbo_frame_tag match do %>
+    <div class="row">
+      <div class="column col-2x">
+        <%= match.date.strftime('%d/%m/%y') %>
+      </div>
+      <div class="column col-2x"><%= link_to match.league.name, league_path(match.league, match_id: match.id), class: 'buttonlike', data: {turbo_frame: "show_league_for_match_#{match.id}"} %></div>
+      <div class="column col-2x"><%= match.league.season %></div>
+      <div class="column"><%= link_to match_path(match) do %>
+                                        <i class="bi bi-clipboard"></i>
+                                      <% end %>
+      </div>
+      <div class="column nomobile"><%= link_to edit_match_path(match),
+                                              data: {turbo_frame: dom_id(match)} do %>
+                                                <i class="bi bi-pencil-fill"></i>
+                                              <% end %>
+      </div>
+    </div>
+
+    <%= turbo_frame_tag "show_league_for_match_#{match.id}" %>
+    <%#= require the match in the turbo_frame tag not just the league otherwise matches of the same league will have the same turbo-frame id and league will display in the wrong place %>
+    <%#= turbo_frame_tag match.league %>
+  <% end %>
 <% end %>
 
 

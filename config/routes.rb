@@ -15,6 +15,9 @@ Rails.application.routes.draw do
 
   resources :leagues do
     resources :league_auths, only: [ :create, :destroy ]
+    get :auths_user_section, to: "league_auths#user_section"
+    resources :memberships, only: [ :create, :destroy ]
+    get :memberships_player_section, to: "memberships#player_section"
   end
 
   get "up" => "rails/health#show", as: :rails_health_check

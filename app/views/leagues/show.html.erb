@@ -1,34 +1,15 @@
-<%#= turbo_frame_tag @league do %>
-<%= turbo_frame_tag @frame_id do %>
-<div id="league-table" class="canvas gray100-canvas embossed mt-1 mb-2">
-  <div class="fst-italic ps-2"><%= "#{@league.full_name} League" %></div>
-  <div class="admin-table mt-2 mb-4">
-      <div class="row">
-        <div class="column col-1x">Name</div>
-        <div class="column col-1x">Matches</div>
-        <div class="column col-1x"><%= sortable(column: "wins", match_id: @match_id) %></div>
-        <div class="column col-1x"><%= sortable(column: "total_score", match_id: @match_id) %></div>
-        <div class="column col-1x">Average Score</div>
-        <div class="column col-1x">Position</div>
-      </div>
-    <% @participants.each_with_index do |participant, index| %>
-      <div class="row">
-        <div class="column col-1x"><%= link_to participant.full_name, participant, class: 'buttonlike', data: {turbo: false} %></div>
-        <div class="column col-1x"><%= participant.matches_played %></div>
-        <div class="column col-1x"><%= participant.wins.round(2) %></div>
-        <div class="column col-1x"><%= number_with_delimiter(participant.total_score.round(2)) %></div>
-        <div class="column col-1x"><%= number_with_delimiter(participant.average_score.round(2)) %></div>
-        <div class="column col-1x"><%= index + 1 %></div>
-      </div>
+<div class="container px-1">
+  <h5 class='mb-2'> <%= "#{@league.full_name} League" %>
+    <% if session[:league_id] %>
+      <%= link_to image_tag('add.png', class: "button_icon"), new_match_path, data: { turbo_frame: dom_id(Match.new)} %>
     <% end %>
-    <% if @show_cancel %>
-      <div class="cancel">
-        <%= link_to image_tag('delete.png', class: "table_icon"), @form_cancel_link %>
-      </div>
-    <% end %>
-  </div>
-</div>
-<% end %>
+  </h5>
+  <%= turbo_frame_tag Match.new %>
 
-<%# this is outside the turbo-frame so will only be seen from the full page league/1 not from a turbo frame render from clicking a league on the matches index  %>
-<%= render 'manage_access_form' %>
+  <%= render 'league_table' %>
+  <div class="canvas gray100-canvas embossed mt-1 mb-2">
+    <%= render 'matches/matches_table' %>
+  </div>
+
+  <%= render 'manage_access_forms' %>
+</div>

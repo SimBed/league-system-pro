@@ -6,6 +6,10 @@
     <div class="column col-2x"><%= league.matches.size || 0 %></div>
     <div class="column col-2x"><%= @league_leaders[league.id]&.full_name %></div>
     <div class="column col-2x"><%= @league_leaders[league.id]&.total_score %></div>
+    <div class="column"><%= link_to league_path(league), data: {turbo: false} do %>
+                                      <i class="bi bi-clipboard"></i>
+                                    <% end %>
+    </div>                                    
     <div class="column nomobile"><%= link_to edit_league_path(league),
                                              data: {turbo_frame: dom_id(league)} do %>
                                                <i class="bi bi-pencil-fill"></i>
