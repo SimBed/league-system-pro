@@ -1,15 +1,7 @@
 <div class="container px-1">
-  <h5 class='mb-2'> <%= "#{@league.full_name} League" %>
-    <% if session[:league_id] %>
-      <%= link_to image_tag('add.png', class: "button_icon"), new_match_path, data: { turbo_frame: dom_id(Match.new)} %>
-    <% end %>
-  </h5>
+  <%= render 'new_match_heading' %>
   <%= turbo_frame_tag Match.new %>
-
-  <%= render 'league_table' %>
-  <div class="canvas gray100-canvas embossed mt-1 mb-2">
-    <%= render 'matches/matches_table' %>
-  </div>
-
+  <%= render partial: 'league_table', locals: { league_table_close_button: @league_table_close_button } %>
+  <%= render 'matches/matches_table' %>
   <%= render 'manage_access_forms' %>
 </div>

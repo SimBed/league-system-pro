@@ -11,11 +11,11 @@ class MatchesControllerTest < ActionDispatch::IntegrationTest
     @andy = players(:andy)
   end
 
-  test "should get index when logged-in" do
-    sign_in @user
-    get matches_path
-    assert_response :success
-  end
+  # test "should get index when logged-in" do
+  #   sign_in @user
+  #   get matches_path
+  #   assert_response :success
+  # end
 
   test "should get new when logged-in" do
     sign_in @user
@@ -28,9 +28,9 @@ class MatchesControllerTest < ActionDispatch::IntegrationTest
     assert_difference -> { Match.count } => 1, -> { Participation.count } => 3 do
       post matches_path, params: { match: { date: Date.parse("3 July 2025"), league_id: @match.league_id,
                                             participations_attributes: {
-                                              "0" => { score: 10, participatable_id: @dan.id },
-                                              "1" => { score: 5, participatable_id: @kev.id },
-                                              "2" => { score: 1, participatable_id: @andy.id }
+                                              "0" => { score: 10, participatable_id: @dan.id, participatable_type: "Player" },
+                                              "1" => { score: 5, participatable_id: @kev.id, participatable_type: "Player" },
+                                              "2" => { score: 1, participatable_id: @andy.id, participatable_type: "Player" }
                                                } } }
     end
 
@@ -45,10 +45,6 @@ class MatchesControllerTest < ActionDispatch::IntegrationTest
 
   test "should get edit when logged-in" do
     sign_in @user
-    # can only edit match from league show, which sets session[:league_id] used (needlessly?) in MatchesController#edit, so go to league show first
-    get league_path(@match.league)
-    assert_response :success
-    refute_nil session[:league_id]
     get edit_match_path(@match)
     assert_response :success
   end
@@ -75,6 +71,6 @@ class MatchesControllerTest < ActionDispatch::IntegrationTest
       delete match_path(@match)
     end
 
-    assert_redirected_to matches_path
+    assert_redirected_to @match.league
   end
 end

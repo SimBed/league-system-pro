@@ -1,0 +1,5 @@
+  <h1 class='h5 mb-2'> <%= "#{@league.full_name} League" %>
+    <%= link_to image_tag('add.png', class: "button_icon"),
+                new_match_path(league_id: params[:id] ),
+                data: { turbo_frame: dom_id(Match.new)} %>
+  </h1>

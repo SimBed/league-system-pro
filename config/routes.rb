@@ -9,9 +9,8 @@ Rails.application.routes.draw do
     resources :player_auths, only: [ :create, :destroy ]
   end
   resources :teams
-  resources :matches do
-    get "filter", on: :collection
-  end
+  resources :matches, except: [ :index ]
+  # get "filter", on: :collection
 
   resources :leagues do
     resources :league_auths, only: [ :create, :destroy ]
@@ -20,5 +19,8 @@ Rails.application.routes.draw do
     get :memberships_player_section, to: "memberships#player_section"
   end
 
+  if Rails.env.development?
+    get "/debug_session", to: "leagues#show_session"
+  end
   get "up" => "rails/health#show", as: :rails_health_check
 end

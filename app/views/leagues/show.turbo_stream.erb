@@ -1,6 +1,5 @@
-
-<%= turbo_stream.replace 'league-table' do %>
-  <%= render partial: "league_table" %>
+<%= turbo_stream.replace @league do %>
+  <%= render partial: "league_table", locals: { league_table_close_button: @league_table_close_button } %>
 <% end %>
 <%#= turbo_stream.update "new_match" do %>
   <%#= render inline:'' %>

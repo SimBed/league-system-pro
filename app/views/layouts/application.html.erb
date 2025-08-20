@@ -26,8 +26,8 @@
         <%= render "layouts/flash" %>
       </div>    
       <%= yield %>
-      <section>            
-        <%= "logged in as: #{current_user.email}" if Rails.env.development? && user_signed_in? %>
+      <footer class = 'container mt-5'>            
+        <%= "logged in as: #{current_user.email}" if user_signed_in? %>
       </section>      
     </main>    
   </body>

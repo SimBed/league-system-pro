@@ -14,16 +14,12 @@ class LeaguesController < ApplicationController
   end
 
   def show
-    filter
+    # filter
     @sort_column, @sort_direction = set_sort_params # e.g. [ "total_score", 'desc' ]
     @participants = Player.with_league_stats(league_id: @league.id).order(order_sql_array.join(", "))
     @match_id = params[:match_id]
-    get_form_cancel_link
-    @frame_id = @match_id ? "show_league_for_match_#{@match_id}" : "league_#{@league.id}"
-    # @addable_players = current_user.players.exclude(@league.players).order_by_name
-    # @leagues = current_user.leagues.order_by_created_at
-    # @league_options = @leagues.map { |league| [ league.full_name, league.id ] }
-    # @matches = Match.where(league: @league).order_by_date.includes(:league)
+    @league_table_close_button = params[:league_table_close_button] == "true" ? true : false
+    # @frame_id = @match_id ? "show_league_for_match_#{@match_id}" : "league_#{@league.id}"
     @matches = @league.matches.order_by_date.includes(:league)
     handle_response
   end
@@ -62,12 +58,18 @@ class LeaguesController < ApplicationController
     redirect_to leagues_path
   end
 
+  # quick way to see the sessions hash
+  # should be in a Debug controller but didnt want to create a new controller just for it
+  def show_session
+    render json: session.to_hash, pretty: true
+  end
+
   private
 
-    def filter
-      clear_session(:league_id)
-      session[:league_id] = params[:id] || session[:league_id]
-    end
+    # def filter
+    #   clear_session(:league_id)
+    #   session[:league_id] = params[:id] || session[:league_id]
+    # end
 
     def set_league
       @league = League.find(params.expect(:id))
@@ -104,12 +106,6 @@ class LeaguesController < ApplicationController
       [ "#{sort_column} #{sort_direction}" ] +
       tie_breakers.map { |col| "#{col} #{sort_direction}" } +
       [ "first_name ASC" ]
-    end
-
-    def get_form_cancel_link
-      @show_cancel = params[:link_from] == "player_show" ? false : true
-
-      @form_cancel_link = @match_id ? matches_path : leagues_path
     end
 
     def authorize_league_access

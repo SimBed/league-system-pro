@@ -11,7 +11,7 @@ class LeaguesTest < ApplicationSystemTestCase
   test "visiting the index" do
     sign_in @user
     visit leagues_path
-    assert_selector "h5", text: "Leagues"
+    assert_selector "h1", text: "Leagues"
   end
 
   test "should create league" do
