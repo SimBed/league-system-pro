@@ -11,7 +11,7 @@ class PlayersTest < ApplicationSystemTestCase
   test "visiting the index" do
     sign_in @user
     visit players_path
-    assert_selector "h5", text: "Players"
+    assert_selector "h1", text: "Players"
   end
 
   test "should create player" do

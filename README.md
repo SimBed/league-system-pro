@@ -32,7 +32,7 @@ t.references :team, foreign_key: true
 ie nil is allowed for team_id, which is consistent with an optional association.
 ```
 
-$ rails g model participation score:integer match:references participatable:references{polymorphic}  
+$ rails g model participation score:integer match:references participant:references{polymorphic}  
 
 ```
 the {polymorphic} syntax here doesn't seem to be officially documented, but does work

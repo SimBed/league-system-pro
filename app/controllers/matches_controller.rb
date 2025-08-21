@@ -12,7 +12,7 @@ class MatchesController < ApplicationController
 
   def show
     # @participants = Player.with_league_stats(league_id: @match.league.id).includes(:participations).order("total_score DESC, first_name ASC")
-    @participations = @match.participations.includes(:participatable).order(score: :desc)
+    @participations = @match.participations.includes(:participant).order(score: :desc)
   end
 
   def new
@@ -91,8 +91,8 @@ class MatchesController < ApplicationController
         # @match.players would go through the participations association (not what we want)
         @players = @match.league.players.order_by_name
         @date = @match.date
-        @score_hash = @match.participations.index_by(&:participatable_id).transform_values(&:score)
-        # {23=>10, 24=>5, 25=>0} key is participatable id, value is score
+        @score_hash = @match.participations.index_by(&:participant_id).transform_values(&:score)
+        # {23=>10, 24=>5, 25=>0} key is participant id, value is score
       end
     end
 
@@ -117,7 +117,7 @@ class MatchesController < ApplicationController
       params.require(:match).permit(
         :date,
         :league_id,
-        participations_attributes: [ :score, :participatable_id, :participatable_type ]
+        participations_attributes: [ :score, :participant_id, :participant_type ]
       )
     end
 
@@ -125,7 +125,7 @@ class MatchesController < ApplicationController
     #   params.require(:match).permit(
     #     :date,
     #     :league_id,
-    #     participations_attributes: [ :score, :participatable_id ]
+    #     participations_attributes: [ :score, :participant_id ]
     #   )
     # end
 
@@ -134,7 +134,7 @@ class MatchesController < ApplicationController
     #   # type = League.find_by(id: base[:league_id]).participant_type.capitalize
     #   type = League.find_by(id: base[:league_id]).participant_type.capitalize
     #   base[:participations_attributes].each do |_, attrs|
-    #     attrs[:participatable_type] = type
+    #     attrs[:participant_type] = type
     #   end
 
     #   base
@@ -143,7 +143,7 @@ class MatchesController < ApplicationController
     def match_params_for_update
       params.require(:match).permit(
         :date,
-        participations_attributes: [ :id, :score, :participatable_id ]
+        participations_attributes: [ :id, :score, :participant_id ]
       )
     end
 end

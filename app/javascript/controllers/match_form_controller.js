@@ -16,7 +16,7 @@ export default class extends Controller {
       wrapper.classList.add("participation-fields")
 
       const playerSelect = document.createElement("select")
-      playerSelect.name = `match[participations_attributes][${i}][participatable_id]`
+      playerSelect.name = `match[participations_attributes][${i}][participant_id]`
 
       this.playersValue.forEach(player => {
         const option = document.createElement("option")
@@ -55,21 +55,21 @@ export default class extends Controller {
 // example build:
 /* <div data-match-form-target="participants">
   <div class="participation-fields">
-    <select name="match[participations_attributes][0][participatable_id]">
+    <select name="match[participations_attributes][0][participant_id]">
       <option value="1">Dan S</option>
       <option value="2">Kev S</option>
       <option value="3">Andy K</option>
     </select>
-      <input type="hidden" name="match[participations_attributes][0][participatable_type]" value="Player">
+      <input type="hidden" name="match[participations_attributes][0][participant_type]" value="Player">
       <input type="number" name="match[participations_attributes][0][score]" placeholder="Player 1 Score">
   </div>
   <div class="participation-fields">
-    <select name="match[participations_attributes][1][participatable_id]">
+    <select name="match[participations_attributes][1][participant_id]">
       <option value="1">Dan S</option>
       <option value="2">Kev S</option>
       <option value="3">Andy K</option>
     </select>
-      <input type="hidden" name="match[participations_attributes][1][participatable_type]" value="Player">
+      <input type="hidden" name="match[participations_attributes][1][participant_type]" value="Player">
       <input type="number" name="match[participations_attributes][1][score]" placeholder="Player 2 Score">
   </div>
 </div> */

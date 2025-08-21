@@ -25,11 +25,11 @@
   <%= form.fields_for :participations do |participation_field| %>
    <% index = participation_field.index %>
     <div class="d-flex flex-row mb-0">
-      <%= participation_field.select :participatable_id,
-        options_from_collection_for_select(@players, :id, :full_name, participation_field.object.participatable_id.presence || @players[index]&.id) %>
+      <%= participation_field.select :participant_id,
+        options_from_collection_for_select(@players, :id, :full_name, participation_field.object.participant_id.presence || @players[index]&.id) %>
       <%= participation_field.number_field :score, min: -9999, max: 9999, step: 0.1, class: 'ms-1' %>
       <% if @match.new_record? %>
-        <%= participation_field.hidden_field :participatable_type, value: @league.participant_type.capitalize, class: 'ms-1' %>
+        <%= participation_field.hidden_field :participant_type, value: @league.participant_type.capitalize, class: 'ms-1' %>
       <% end %>
     </div>
   <% end %>

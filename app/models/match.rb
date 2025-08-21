@@ -1,7 +1,7 @@
 class Match < ApplicationRecord
   belongs_to :league
   has_many :participations, dependent: :destroy
-  has_many :players, through: :participations, source: :participatable, source_type: "Player"
+  has_many :players, through: :participations, source: :participant, source_type: "Player"
   accepts_nested_attributes_for :participations
   validates :date, presence: true
   scope :order_by_date, -> { order(date: :desc, created_at: :desc) }
@@ -18,8 +18,8 @@ class Match < ApplicationRecord
 
   def top_participations
     max_score = participations.maximum(:score)
-    participatables = participations.includes(:participatable).where(score: max_score).map { |p| p.participatable.full_name }
-    { winner: participatables.join("/"),
+    participants = participations.includes(:participant).where(score: max_score).map { |p| p.participant.full_name }
+    { winner: participants.join("/"),
       winning_score: max_score }
   end
 end

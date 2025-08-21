@@ -1,7 +1,7 @@
 class Player < ApplicationRecord
   attr_accessor :creator # allows a check on name uniqueness (per admin) at time of creation.
   belongs_to :team, optional: true
-  has_many :participations, as: :participatable, dependent: :destroy
+  has_many :participations, as: :participant, dependent: :destroy
   has_many :matches, through: :participations
   has_many :leagues, through: :matches
   has_many :player_auths, dependent: :destroy
@@ -18,14 +18,14 @@ class Player < ApplicationRecord
     with(
         # Step 1: Get max score per match
         max_scores: Participation
-          .where(participatable_type: "Player")
+          .where(participant_type: "Player")
           .select("match_id, MAX(score) AS max_score")
           .group(:match_id),
 
         # Step 2: Count how many players got that max score
         winners: Participation
           .joins("INNER JOIN max_scores ms ON ms.match_id = participations.match_id AND participations.score = ms.max_score")
-          .where(participatable_type: "Player")
+          .where(participant_type: "Player")
           .select("ms.match_id, ms.max_score, COUNT(*) AS num_winners")
           .group("ms.match_id, ms.max_score")
       )
@@ -43,7 +43,7 @@ class Player < ApplicationRecord
           END
         ) AS wins
       SQL
-      .joins("INNER JOIN participations p ON p.participatable_id = players.id AND p.participatable_type = 'Player'")
+      .joins("INNER JOIN participations p ON p.participant_id = players.id AND p.participant_type = 'Player'")
       .joins("INNER JOIN matches ON matches.id = p.match_id")
       .joins("INNER JOIN winners w ON w.match_id = p.match_id")
       .group("players.id, matches.league_id")

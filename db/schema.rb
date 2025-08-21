@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_08_13_154503) do
+ActiveRecord::Schema[8.0].define(version: 2025_08_21_172527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -57,12 +57,12 @@ ActiveRecord::Schema[8.0].define(version: 2025_08_13_154503) do
   create_table "participations", force: :cascade do |t|
     t.decimal "score", precision: 5, scale: 1, null: false
     t.bigint "match_id", null: false
-    t.string "participatable_type", null: false
-    t.bigint "participatable_id", null: false
+    t.string "participant_type", null: false
+    t.bigint "participant_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["match_id"], name: "index_participations_on_match_id"
-    t.index ["participatable_type", "participatable_id"], name: "index_participations_on_participatable"
+    t.index ["participant_type", "participant_id"], name: "index_participations_on_participant"
   end
 
   create_table "player_auths", force: :cascade do |t|

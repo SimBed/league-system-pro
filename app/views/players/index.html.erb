@@ -2,7 +2,7 @@
   <% content_for :title, "Players" %>
   <h1 class='h5 mb-2'>Players
     <%= link_to image_tag('add.png', class: "button_icon"), new_player_path, data: { turbo_frame: dom_id(Player.new)} %>
-  </h5>
+  </h1>
   <%= turbo_frame_tag Player.new %>
   <%= turbo_frame_tag 'players' do %>
     <%= render 'players_table' %>

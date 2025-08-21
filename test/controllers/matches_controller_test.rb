@@ -28,9 +28,9 @@ class MatchesControllerTest < ActionDispatch::IntegrationTest
     assert_difference -> { Match.count } => 1, -> { Participation.count } => 3 do
       post matches_path, params: { match: { date: Date.parse("3 July 2025"), league_id: @match.league_id,
                                             participations_attributes: {
-                                              "0" => { score: 10, participatable_id: @dan.id, participatable_type: "Player" },
-                                              "1" => { score: 5, participatable_id: @kev.id, participatable_type: "Player" },
-                                              "2" => { score: 1, participatable_id: @andy.id, participatable_type: "Player" }
+                                              "0" => { score: 10, participant_id: @dan.id, participant_type: "Player" },
+                                              "1" => { score: 5, participant_id: @kev.id, participant_type: "Player" },
+                                              "2" => { score: 1, participant_id: @andy.id, participant_type: "Player" }
                                                } } }
     end
 
@@ -51,16 +51,16 @@ class MatchesControllerTest < ActionDispatch::IntegrationTest
 
   test "should update match when logged-in" do
     sign_in @user
-    participation_to_edit = @match.participations.where(participatable_id: @dan.id).first
+    participation_to_edit = @match.participations.where(participant_id: @dan.id).first
     original_score = participation_to_edit.score
     assert_no_difference -> { Match.count }, -> { Participation.count } do
       patch match_path(@match), params: { match: { date: @match.date.advance(days: 1),
                                                    participations_attributes: {
-                                                    "0" => { score: original_score + 1, id: participation_to_edit.id, participatable_id: @dan.id }
+                                                    "0" => { score: original_score + 1, id: participation_to_edit.id, participant_id: @dan.id }
                                                } } }
     end
 
-    assert_equal original_score + 1, @match.participations.where(participatable_id: @dan.id).first.score
+    assert_equal original_score + 1, @match.participations.where(participant_id: @dan.id).first.score
 
     assert_redirected_to @match.league
   end

@@ -1,3 +1,3 @@
 class Team < ApplicationRecord
-  has_many :participations, as: :participatable, dependent: :destroy
+  has_many :participations, as: :participant, dependent: :destroy
 end
