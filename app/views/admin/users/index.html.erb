@@ -1,0 +1,16 @@
+<% content_for :title, "View As" %>
+<div class="container">
+  <h1 class='h5 mb-2'>Users</h1>
+  <div id="users-table" class="container px-0 mb-5">
+    <div class="container px-0 mb-5">
+      <div class="admin-table mt-2">
+        <div class="row fw-bolder">
+          <div class="column col-2x">View As</div>
+          <div class="column nomobile"></div>
+        </div>
+      </div>
+      <div class="admin-table">
+        <%= render @users %>
+      </div>
+    </div>
+  </div>

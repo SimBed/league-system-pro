@@ -1,9 +1,9 @@
 one:
-  user: one
+  user: admin_user
   player: dan
   role: admin
 
 two:
-  user: one
+  user: admin_user
   player: kev
   role: admin

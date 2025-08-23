@@ -2,6 +2,7 @@ class MatchesController < ApplicationController
   before_action :authenticate_user!
   before_action :require_league, only: [ :new ]
   before_action :set_match, only: %i[ show edit update destroy ]
+  before_action :set_common_options, only: %i[ new edit create update ]
 
   # def index
   #   handle_selection
@@ -16,13 +17,13 @@ class MatchesController < ApplicationController
   end
 
   def new
-    set_options(__method__)
+    set_new_options
     @match = @league.matches.build
     @league.participants_per_match.times { @match.participations.build }
   end
 
   def edit
-    set_options(__method__)
+    set_edit_options(__method__)
   end
 
   def create
@@ -31,18 +32,18 @@ class MatchesController < ApplicationController
       flash[:success] = "Match was successfully created."
       redirect_to @match.league
     else
-      set_options(:new)
-      # render edit to retain inputs (rather than new which will lose the inputs and start league selection...dynamic form process again)
+      set_edit_options(__method__)
+      # render edit to retain inputs
       render :edit, status: :unprocessable_entity
     end
   end
 
   def update
     if @match.update(match_params_for_update)
-    flash[:success] = "Match was successfully updated."
-    redirect_to @match.league
+      flash[:success] = "Match was successfully updated."
+      redirect_to @match.league
     else
-      set_options(:edit)
+      set_edit_options(__method__)
       render :edit, status: :unprocessable_entity
     end
   end
@@ -53,11 +54,6 @@ class MatchesController < ApplicationController
     redirect_to @match.league
   end
 
-  # def filter
-  #   clear_session(:league_id)
-  #   session[:league_id] = params[:league_id] || session[:league_id]
-  #   redirect_to matches_path
-  # end
 
   private
     def set_match
@@ -77,34 +73,24 @@ class MatchesController < ApplicationController
       }
     end
 
-    def set_options(method)
+    def set_common_options
       @leagues = current_user.leagues.order_by_created_at
       @league_options = @leagues.map { |league| [ league.full_name, league.id ] }
-      # @league = League.find(session[:league_id].to_i)
-      case method
-      when :new
-        # @players = current_user.players.order_by_name
-        @league = League.find(params[:league_id].to_i)
-        @players = @league.players.order_by_name
-        @date = Time.zone.today
-      when :edit
-        # @match.players would go through the participations association (not what we want)
-        @players = @match.league.players.order_by_name
-        @date = @match.date
-        @score_hash = @match.participations.index_by(&:participant_id).transform_values(&:score)
-        # {23=>10, 24=>5, 25=>0} key is participant id, value is score
-      end
     end
 
-    # def handle_selection
-    #   session[:league_id] = session[:league_id] || current_user.leagues.minimum(:id)
-    #   # check session[:league_id] still authorised
-    #   @matches = if session[:league_id].nil? || !current_user.leagues.pluck(:id).include?(session[:league_id].to_i)
-    #     []
-    #   else
-    #     Match.where(league_id: session[:league_id].to_i).order_by_date.includes(:league)
-    #   end
-    # end
+    def set_new_options
+      @league = League.find(params[:league_id].to_i)
+      @players = @league.players.order_by_name
+      @date = Time.zone.today
+    end
+
+    def set_edit_options(method)
+      @league = @match.league if method == :create # only relevant when create fails and @match is a new record
+      @players = @match.league.players.order_by_name # @match.players would go through the participations association (not what we want)
+      @date = @match.date
+      @score_hash = @match.participations.index_by(&:participant_id).transform_values(&:score)
+      # {23=>10, 24=>5, 25=>0} key is participant id, value is score
+    end
 
     def handle_index_response
       respond_to do |format|
@@ -120,25 +106,6 @@ class MatchesController < ApplicationController
         participations_attributes: [ :score, :participant_id, :participant_type ]
       )
     end
-
-    # def base_match_params
-    #   params.require(:match).permit(
-    #     :date,
-    #     :league_id,
-    #     participations_attributes: [ :score, :participant_id ]
-    #   )
-    # end
-
-    # def match_params
-    #   base = base_match_params
-    #   # type = League.find_by(id: base[:league_id]).participant_type.capitalize
-    #   type = League.find_by(id: base[:league_id]).participant_type.capitalize
-    #   base[:participations_attributes].each do |_, attrs|
-    #     attrs[:participant_type] = type
-    #   end
-
-    #   base
-    # end
 
     def match_params_for_update
       params.require(:match).permit(

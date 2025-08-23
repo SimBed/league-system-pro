@@ -1,6 +1,7 @@
 <% navbarPresenter = NavbarPresenter.new(user_signed_in?, request.path) %>
 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-  <%= navbarPresenter.nav_item_text('Players', players_path) %>  
-  <%= navbarPresenter.nav_item_text('Leagues', leagues_path) %>  
+  <%= navbarPresenter.nav_item_text('Players', players_path, true) %>  
+  <%= navbarPresenter.nav_item_text('Leagues', leagues_path, true) %>
+  <%= navbarPresenter.nav_item_text('Users', users_path, current_user&.admin? ) %>
 </ul>
 
