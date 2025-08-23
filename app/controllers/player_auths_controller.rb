@@ -27,7 +27,8 @@ class PlayerAuthsController < ApplicationController
 
   def ensure_owner!
     unless @player.player_auths.find_by(user: current_user)&.admin?
-      redirect_to root_path, alert: "Only admin can manage authorisations."
+      flash[:warning] = I18n.t(:forbidden)
+      redirect_to new_user_session_path
     end
   end
 end

@@ -4,7 +4,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    @user = users(:one)
+    @admin = users(:admin_user)
   end
   test "root should redirect to log in page when not logged in" do
     get "/"
@@ -12,7 +12,7 @@ class PagesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "root should redirect to matches index when logged in" do
-    sign_in @user
+    sign_in @admin
     get "/"
     assert_redirected_to leagues_path
   end

@@ -27,8 +27,8 @@
       </div>    
       <%= yield %>
       <footer class = 'container mt-5'>            
-        <%= "logged in as: #{current_user.email}" if user_signed_in? %>
-      </section>      
+        <%= render "layouts/view_as_banner" %>
+      </footer>      
     </main>    
   </body>
 </html>

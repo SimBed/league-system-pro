@@ -1,0 +1,11 @@
+<div class="row">
+  <div class="column col-2x"><%= user.email %></div>                                        
+  <div class="column nomobile">
+    <%#= link_to image_tag('view.png', class:'table_icon'),
+                impersonate_user_path(user),
+                data: {turbo_method: :post,  turbo_frame: "_top", turbo_confirm: "View as #{user.email}?" }
+    %>     
+    <%= button_to image_tag('view.png', class: 'table_icon'), impersonate_user_path(user),class:  'border-0', method: :post, confirm: "View as #{user.email}?", data: {turbo: false} %>
+
+  </div>
+</div>

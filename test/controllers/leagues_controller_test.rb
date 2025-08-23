@@ -4,12 +4,12 @@ class LeaguesControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::IntegrationHelpers
 
   setup do
-    @user = users(:one)
+    @admin = users(:admin_user)
     @league = leagues(:league1)
   end
 
   test "should get index when logged-in" do
-    sign_in @user
+    sign_in @admin
     get leagues_path
     assert_response :success
   end
@@ -20,7 +20,7 @@ class LeaguesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get new when logged-in" do
-    sign_in @user
+    sign_in @admin
     get new_league_path
     assert_response :success
   end
@@ -31,7 +31,7 @@ class LeaguesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should create league when logged-in" do
-    sign_in @user
+    sign_in @admin
     assert_difference("League.count") do
       post leagues_path, params: { league: { name: @league.name,
                                              season: "Season3",
@@ -54,7 +54,7 @@ class LeaguesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should show league when logged-in" do
-    sign_in @user
+    sign_in @admin
     get league_path(@league)
     assert_response :success
   end
@@ -65,7 +65,7 @@ class LeaguesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should get edit when logged-in" do
-    sign_in @user
+    sign_in @admin
     get edit_league_path(@league)
     assert_response :success
   end
@@ -76,7 +76,7 @@ class LeaguesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should update league when logged-in" do
-    sign_in @user
+    sign_in @admin
     patch league_path(@league), params: { league: { name: "leagueZ", season: "SeasonZ" } }
     assert_redirected_to leagues_path
   end
@@ -89,7 +89,7 @@ class LeaguesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test "should destroy league when logged-in" do
-    sign_in @user
+    sign_in @admin
     assert_difference("League.count", -1) do
       delete league_path(@league)
     end

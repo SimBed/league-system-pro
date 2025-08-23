@@ -4,18 +4,19 @@ class LeaguesTest < ApplicationSystemTestCase
   include Devise::Test::IntegrationHelpers
 
   setup do
-    @user = users(:one)
+    @admin = users(:admin_user)
+    @user1 = users(:user1)
     @league = leagues(:league1)
   end
 
   test "visiting the index" do
-    sign_in @user
+    sign_in @user1
     visit leagues_path
     assert_selector "h1", text: "Leagues"
   end
 
   test "should create league" do
-    sign_in @user
+    sign_in @user1
     visit leagues_path
     click_link nil, href: new_league_path
 
@@ -30,7 +31,7 @@ class LeaguesTest < ApplicationSystemTestCase
   end
 
   test "should update League" do
-    sign_in @user
+    sign_in @admin
     visit leagues_path
     click_link nil, href: edit_league_path(@league)
     # click_on "Edit League", match: :first

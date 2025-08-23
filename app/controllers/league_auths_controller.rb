@@ -42,7 +42,7 @@ class LeagueAuthsController < ApplicationController
 
   def ensure_admin!
     unless @league.league_auths.find_by(user: current_user)&.admin?
-      redirect_to root_path, alert: "Only admin can manage authorisations."
+      flash[:warning] = I18n.t(:forbidden)
     end
   end
 end

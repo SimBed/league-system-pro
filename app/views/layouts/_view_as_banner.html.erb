@@ -1,0 +1,8 @@
+<div class="">
+  <% if true_user && true_user != current_user %>
+      <%= true_user.email %> viewing as <%= current_user.email %>
+      <%= button_to image_tag('delete.png', class: 'table_icon'), stop_impersonating_path, class: 'border-0', method: :delete %>
+    <% else %>
+      <%= "logged in as: #{current_user.email}" if user_signed_in? %>
+  <% end %>
+</div>

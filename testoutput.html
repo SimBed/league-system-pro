@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Leagues</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    
+    
+
+    
+
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="icon" href="/icon.svg" type="image/svg+xml">
+    <link rel="apple-touch-icon" href="/icon.png">
+
+    <link rel="stylesheet" href="/assets/application-af796603.css" data-turbo-track="reload" />
+    <script type="importmap" data-turbo-track="reload">{
+  "imports": {
+    "application": "/assets/application-7d0c6059.js",
+    "@hotwired/turbo-rails": "/assets/turbo.min-3a2e143f.js",
+    "@hotwired/stimulus": "/assets/stimulus.min-4b1e420e.js",
+    "@hotwired/stimulus-loading": "/assets/stimulus-loading-1fc53fe7.js",
+    "bootstrap": "/assets/bootstrap.bundle.min-7e180834.js",
+    "controllers/application": "/assets/controllers/application-3affb389.js",
+    "controllers/flash_controller": "/assets/controllers/flash_controller-3fc38198.js",
+    "controllers/form_cancel_controller": "/assets/controllers/form_cancel_controller-1fc31917.js",
+    "controllers/hello_controller": "/assets/controllers/hello_controller-708796bd.js",
+    "controllers": "/assets/controllers/index-ee64e1f1.js",
+    "controllers/match_form_controller": "/assets/controllers/match_form_controller-d57f7598.js",
+    "controllers/removals_controller": "/assets/controllers/removals_controller-c955ded1.js"
+  }
+}</script>
+<link rel="modulepreload" href="/assets/application-7d0c6059.js">
+<link rel="modulepreload" href="/assets/turbo.min-3a2e143f.js">
+<link rel="modulepreload" href="/assets/stimulus.min-4b1e420e.js">
+<link rel="modulepreload" href="/assets/stimulus-loading-1fc53fe7.js">
+<link rel="modulepreload" href="/assets/bootstrap.bundle.min-7e180834.js">
+<link rel="modulepreload" href="/assets/controllers/application-3affb389.js">
+<link rel="modulepreload" href="/assets/controllers/flash_controller-3fc38198.js">
+<link rel="modulepreload" href="/assets/controllers/form_cancel_controller-1fc31917.js">
+<link rel="modulepreload" href="/assets/controllers/hello_controller-708796bd.js">
+<link rel="modulepreload" href="/assets/controllers/index-ee64e1f1.js">
+<link rel="modulepreload" href="/assets/controllers/match_form_controller-d57f7598.js">
+<link rel="modulepreload" href="/assets/controllers/removals_controller-c955ded1.js">
+<script type="module">import "application"</script>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-sticky bg-body-tertiary">
+  <div class="container">
+    <a class="navbar-brand me-5" href="/">league system pro</a>
+    <button class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation">
+  <span class="navbar-toggler-icon"></span>
+</button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+  <li class="nav-item"><a href="/players" class="nav-link">Players</a></li>  
+  <li class="nav-item"><a href="/leagues" class="nav-link active">Leagues</a></li>
+  
+</ul>
+
+
+    <ul class="navbar-nav" >
+    <li class="nav-item">
+      <a class="nav-link" data-turbo-method="delete" href="/users/sign_out">            
+        <i class="bi bi-door-open-fill"></i>
+</a>    </li>
+  </ul>
+  
+</div>
+
+  </div>    
+</nav>
+
+    <main class= 'navbar-headroom'>
+      <div id='flash' class="flash">  
+          <div class="flash__message alert alert-warning"
+    data-controller="removals"
+    data-action="animationend->removals#remove"
+  >
+    Forbidden
+  </div>
+
+      </div>    
+      <div class="container px-1">
+  <h1 class='h5 mb-2'>Leagues 
+    <a data-turbo-frame="new_league" alt="New League" href="/leagues/new"><img class="button_icon" src="/assets/add-b3af3f2f.png" /></a>
+  </h1>
+  <turbo-frame id="new_league"></turbo-frame>
+  <turbo-frame id="leagues">
+    <div id="leagues-table" class="match-league-data px-0 mb-5">
+  <div class="px-0 mb-5">
+    <div class="admin-table mt-2">
+      <div class="row fw-bolder">
+        <div class="column col-2x">Name</div>
+        <div class="column col-2x">Season</div>
+        <div class="column col-2x">Participants</div>
+        <div class="column col-2x">Matches Played</div>
+        <div class="column col-2x">Winner/Leader</div>
+        <div class="column col-2x">Winning/Leading Score</div>
+        <div class="column nomobile"></div>
+        <div class="column nomobile"></div>
+      </div>
+    </div>
+    <div class="admin-table">
+      
+    </div>
+  </div>
+</div>
+
+
+
+</turbo-frame></div>
+
+      <footer class = 'container mt-5'>            
+        <div class="">
+      logged in as: user2@example.com
+</div>
+
+      </footer>      
+    </main>    
+  </body>
+</html>

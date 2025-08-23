@@ -83,7 +83,8 @@ class PlayersController < ApplicationController
 
     def authorize_player_access
       unless @player.users.include?(current_user)
-        redirect_to root_path, alert: "You are not authorized to take this action."
+        flash[:warning] = I18n.t(:forbidden)
+        redirect_to new_user_session_path
       end
     end
 end

@@ -19,6 +19,13 @@ Rails.application.routes.draw do
     get :memberships_player_section, to: "memberships#player_section"
   end
 
+  scope module: :admin do
+    resources :users, only: [ :index, :destroy ] do
+      post :impersonate, on: :member, to: "impersonations#create"
+    end
+    delete "/impersonations/stop", to: "impersonations#destroy", as: :stop_impersonating
+  end
+
   if Rails.env.development?
     get "/debug_session", to: "leagues#show_session"
   end
